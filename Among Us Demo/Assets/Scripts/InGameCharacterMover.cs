@@ -39,6 +39,11 @@ public class InGameCharacterMover : CharacterMover
 
     public bool isKillable { get { return killCooldown < 0 && playerFinder.targets.Count != 0; } }
 
+    [SyncVar]
+    public bool isReporter = false;
+
+    
+
 
     public EPlayerColor foundDeadbodyColor;
 
@@ -180,6 +185,7 @@ public class InGameCharacterMover : CharacterMover
     [Command]
     public void CmdReport(EPlayerColor deadbodyColor)
     {
+        isReporter = true;
         GameSystem.Instance.StartReportMeeting(deadbodyColor);
     }
 

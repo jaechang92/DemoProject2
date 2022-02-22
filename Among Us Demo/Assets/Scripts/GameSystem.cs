@@ -158,10 +158,20 @@ public class GameSystem : NetworkBehaviour
         RpcSendReportSign(deadbodyColor);
     }
 
+    private IEnumerator StartMeeting_Coroutine()
+    {
+        yield return new WaitForSeconds(3.0f);
+        InGameUIManager.Instance.ReportUI.Close();
+        InGameUIManager.Instance.MeetingUI.Open();
+    }
+
     [ClientRpc]
     public void RpcSendReportSign(EPlayerColor deadbodyColor)
     {
         InGameUIManager.Instance.ReportUI.Open(deadbodyColor);
+
+        StartCoroutine(StartMeeting_Coroutine());
+
     }
 
 }
