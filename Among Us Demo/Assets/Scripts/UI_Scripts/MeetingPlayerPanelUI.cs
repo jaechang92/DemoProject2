@@ -15,11 +15,33 @@ public class MeetingPlayerPanelUI : MonoBehaviour
     private GameObject reportSign;
     [SerializeField]
     private GameObject voteButtons;
-
-
     [HideInInspector]
     public InGameCharacterMover targetPlayer;
+    [SerializeField]
+    private GameObject voteSign;
+    [SerializeField]
+    private GameObject voterPrefab;
+    [SerializeField]
+    private Transform voterParentTransform;
 
+
+    public void UpdatePanel(EPlayerColor voterColor)
+    {
+        var voter = Instantiate(voterPrefab, voterParentTransform).GetComponent<Image>();
+        voter.material = Instantiate(voter.material);
+        voter.material.SetColor("_PlayerColor", PlayerColor.GetColor(voterColor));
+        
+    }
+
+    public void OpenResult()
+    {
+        voterParentTransform.gameObject.SetActive(true);
+    }
+
+    public void UpdateVoteSign(bool isVoted)
+    {
+        voteSign.SetActive(isVoted);
+    }
 
     public void SetPlayer(InGameCharacterMover target)
     {
@@ -48,6 +70,11 @@ public class MeetingPlayerPanelUI : MonoBehaviour
     public void OnClickPlayerPanel()
     {
         var myCharacter = AmongUsRoomPlayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
+        if (myCharacter.isVote)
+        {
+            return;
+        }
+
         if ((myCharacter.playerType & EPlayerType.Ghost) != EPlayerType.Ghost)
         {
             InGameUIManager.Instance.MeetingUI.SelectPlayerPanel();
@@ -56,11 +83,17 @@ public class MeetingPlayerPanelUI : MonoBehaviour
 
     }
 
+
+    public void Select()
+    {
+        var myCharacter = AmongUsRoomPlayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
+        myCharacter.CmdVoteEjectPlayer(targetPlayer.playerColor);
+        Unselect();
+    }
+
     public void Unselect()
     {
         voteButtons.SetActive(false);
-
-
     }
 
 }

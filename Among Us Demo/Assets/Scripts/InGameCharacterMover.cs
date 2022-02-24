@@ -42,6 +42,11 @@ public class InGameCharacterMover : CharacterMover
     [SyncVar]
     public bool isReporter = false;
 
+    [SyncVar]
+    public bool isVote;
+
+    [SyncVar]
+    public int vote;
     
 
 
@@ -124,31 +129,38 @@ public class InGameCharacterMover : CharacterMover
         if (target != null)
         {
             RpcTeleport(target.transform.position);
-            target.Dead(playerColor);
+            target.Dead(false, playerColor);
             killCooldown = GameSystem.Instance.killCooldown;
         }
 
     }
 
 
-    public void Dead(EPlayerColor imposterColor)
+    public void Dead(bool isEject, EPlayerColor imposterColor = EPlayerColor.Black)
     {
         playerType = EPlayerType.Ghost;
-        RpcDead(imposterColor, playerColor);
-        var manager = NetworkRoomManager.singleton as AmongUsRoomManager;
-        var deadbody = Instantiate(manager.spawnPrefabs[1], transform.position, transform.rotation).GetComponent<Deadbody>();
-        NetworkServer.Spawn(deadbody.gameObject);
-        deadbody.RpcSetColor(playerColor);
+        RpcDead(isEject, imposterColor, playerColor);
+        if (!isEject)
+        {
+            var manager = NetworkRoomManager.singleton as AmongUsRoomManager;
+            var deadbody = Instantiate(manager.spawnPrefabs[1], transform.position, transform.rotation).GetComponent<Deadbody>();
+            NetworkServer.Spawn(deadbody.gameObject);
+            deadbody.RpcSetColor(playerColor);
+        }
 
     }
 
     [ClientRpc]
-    private void RpcDead(EPlayerColor imposterColor, EPlayerColor crewColor)
+    private void RpcDead(bool isEject, EPlayerColor imposterColor, EPlayerColor crewColor)
     {
         if (hasAuthority)
         {
             animator.SetBool("isGhost", true);
-            InGameUIManager.Instance.KillUI.Open(imposterColor,crewColor);
+            if (isEject)
+            {
+                InGameUIManager.Instance.KillUI.Open(imposterColor,crewColor);
+            }
+
 
             var players = GameSystem.Instance.GetPlayerList();
             foreach (var player in players)
@@ -205,6 +217,34 @@ public class InGameCharacterMover : CharacterMover
             spriteRenderer.material.SetColor("_PlayerColor", color);
             nicknameText.text = "";
         }
+    }
+
+    [Command]
+    public void CmdVoteEjectPlayer(EPlayerColor ejectColor)
+    {
+        isVote = true;
+        GameSystem.Instance.RpcSignVoteEject(playerColor, ejectColor);
+        
+        var player = FindObjectsOfType<InGameCharacterMover>();
+        InGameCharacterMover ejectPlayer = null;
+        for (int i = 0; i < player.Length; i++)
+        {
+            if (player[i].playerColor == ejectColor)
+            {
+                ejectPlayer = player[i];
+
+            }
+        }
+        ejectPlayer.vote += 1;
+        GameSystem.Instance.voteCount += 1;
+    }
+
+    [Command]
+    public void CmdSkipVote()
+    {
+        isVote = true;
+        GameSystem.Instance.skipVotePlayerCount += 1;
+        GameSystem.Instance.RpcSignSkipVote(playerColor);
     }
 
 }

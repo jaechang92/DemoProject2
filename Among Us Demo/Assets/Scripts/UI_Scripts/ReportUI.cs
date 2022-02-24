@@ -14,7 +14,7 @@ public class ReportUI : MonoBehaviour
     public void Open(EPlayerColor deadbodyColor)
     {
         AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = false;
-
+        
         Material inst = Instantiate(material);
         deadbodyImage.material = inst;
 
