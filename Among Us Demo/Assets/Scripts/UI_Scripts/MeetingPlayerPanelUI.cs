@@ -30,7 +30,6 @@ public class MeetingPlayerPanelUI : MonoBehaviour
         var voter = Instantiate(voterPrefab, voterParentTransform).GetComponent<Image>();
         voter.material = Instantiate(voter.material);
         voter.material.SetColor("_PlayerColor", PlayerColor.GetColor(voterColor));
-        
     }
 
     public void OpenResult()

@@ -36,8 +36,9 @@ public class MeetingUI : MonoBehaviour
 
     
     private List<MeetingPlayerPanelUI> meetingPlayerPanels = new List<MeetingPlayerPanelUI>();
+    private List<Image> skipVoterImages = new List<Image>();
 
-    
+
     public void Open()
     {
         var myCharacter = AmongUsRoomPlayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
@@ -45,7 +46,7 @@ public class MeetingUI : MonoBehaviour
         myPanel.SetPlayer(myCharacter);
         meetingPlayerPanels.Add(myPanel);
         gameObject.SetActive(true);
-
+        
         var players = FindObjectsOfType<InGameCharacterMover>();
         foreach (var player in players)
         {
@@ -103,6 +104,7 @@ public class MeetingUI : MonoBehaviour
         var voter = Instantiate(voterPrefab, skipVoteParentTransform).GetComponent<Image>();
         voter.material = Instantiate(voter.material);
         voter.material.SetColor("_PlayerColor", PlayerColor.GetColor(skipVotePlayerColor));
+        skipVoterImages.Add(voter);
         //skipVoteButton.SetActive(false);
 
     }
@@ -168,6 +170,24 @@ public class MeetingUI : MonoBehaviour
     public void Close()
     {
         gameObject.SetActive(false);
+    }
+
+
+    private void OnEnable()
+    {
+        foreach (var item in meetingPlayerPanels)
+        {
+            Destroy(item.gameObject);
+        }
+        foreach (var item in skipVoterImages)
+        {
+            Destroy(item.gameObject);
+        }
+
+        meetingPlayerPanels.Clear();
+        skipVoterImages.Clear();
+        skipVotePlayers.SetActive(false);
+        skipVoteButton.SetActive(true);
     }
 
 }
