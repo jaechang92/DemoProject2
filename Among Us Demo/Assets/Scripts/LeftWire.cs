@@ -9,40 +9,39 @@ public class LeftWire : MonoBehaviour
     [SerializeField]
     private RectTransform mWireBody;
     [SerializeField]
-    private LeftWire mSelectedWire;
+    public LeftWire mSelectedWire;
+    [SerializeField]
+    public bool isConnect = false;
+    [SerializeField]
+    public GameObject target;
 
     [SerializeField]
     private float offset = 15f;
 
+    [SerializeField]
+    public List<Image> changeColorList;
 
     private Canvas mGameCanvas;
 
+    private void InitSetting()
+    {
+        mWireBody.localRotation = Quaternion.Euler(Vector3.zero);
+        mWireBody.sizeDelta = new Vector2(0f, mWireBody.sizeDelta.y);
+        mSelectedWire = null;
+    }
     // Start is called before the first frame update
     void Start()
     {
         mGameCanvas = FindObjectOfType<Canvas>();
+        InitSetting();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.right, 1f);
-            if (hit.collider != null)
-            {
-                var left = hit.collider.GetComponentInParent<LeftWire>();
-                if (left != null)
-                {
-                    mSelectedWire = left;
-                }
-            }
-            Debug.Log("in");
-        }
-
+        
         if (Input.GetMouseButtonUp(0))
         {
-            if (mSelectedWire != null)
+            if (mSelectedWire != null && !isConnect)
             {
                 mWireBody.localRotation = Quaternion.Euler(Vector3.zero);
                 mWireBody.sizeDelta = new Vector2(0f, mWireBody.sizeDelta.y);
@@ -51,14 +50,22 @@ public class LeftWire : MonoBehaviour
         }
 
 
-        if (mSelectedWire !=null)
+        if (mSelectedWire !=null && !isConnect)
         {
             float angle = Vector2.SignedAngle(transform.position + Vector3.right - transform.position, Input.mousePosition - transform.position);
             float distance = Vector2.Distance(mWireBody.transform.position, Input.mousePosition) - offset;
             mWireBody.localRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
             mWireBody.sizeDelta = new Vector2(distance * (1 / mGameCanvas.transform.localScale.x), mWireBody.sizeDelta.y);
-
-            Debug.Log(mWireBody.sizeDelta);
         }
+
+        if (target != null && isConnect)
+        {
+            float angle = Vector2.SignedAngle(transform.position + Vector3.right - transform.position, target.transform.position - transform.position);
+            float distance = Vector2.Distance(mWireBody.transform.position, target.transform.position) - offset;
+            mWireBody.localRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+            mWireBody.sizeDelta = new Vector2(distance * (1 / mGameCanvas.transform.localScale.x), mWireBody.sizeDelta.y);
+        }
+
+
     }
 }
