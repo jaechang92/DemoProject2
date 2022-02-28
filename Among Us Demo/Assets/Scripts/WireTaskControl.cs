@@ -17,24 +17,39 @@ public class WireTaskControl : MonoBehaviour, IPointerDownHandler , IPointerUpHa
     private float offset = 15f;
 
     private LeftWire nowLeftWire;
+    private int connectCount;
     public void OnPointerDown(PointerEventData eventData)
     {
         if (eventData.pointerCurrentRaycast.gameObject.CompareTag("task_wire"))
         {
             nowLeftWire = eventData.pointerCurrentRaycast.gameObject.GetComponentInParent<LeftWire>();
-            nowLeftWire.mSelectedWire = nowLeftWire;
+            //nowLeftWire.mSelectedWire = nowLeftWire;
+            nowLeftWire.isDragged = true;
         }
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        
+        nowLeftWire.isDragged = false;
+        if (nowLeftWire.isConnect)
+        {
+            return;
+        }
         if (nowLeftWire.GetComponent<Image>().color == eventData.pointerCurrentRaycast.gameObject.GetComponent<Image>().color)
         {
-            Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
+            nowLeftWire.SetTarget(eventData.pointerCurrentRaycast.gameObject.transform.position, -40f);
             nowLeftWire.isConnect = true;
-            nowLeftWire.target = eventData.pointerCurrentRaycast.gameObject;
+            connectCount++;
+            if (connectCount == 4)
+            {
+                Debug.Log("미션클리어");
+            }
         }
+        else
+        {
+            nowLeftWire.ResetTarget();
+        }
+        
     }
 
 

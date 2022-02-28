@@ -23,6 +23,7 @@ public class LeftWire : MonoBehaviour
 
     private Canvas mGameCanvas;
 
+    public bool isDragged = false;
     private void InitSetting()
     {
         mWireBody.localRotation = Quaternion.Euler(Vector3.zero);
@@ -38,34 +39,25 @@ public class LeftWire : MonoBehaviour
 
     void Update()
     {
-        
-        if (Input.GetMouseButtonUp(0))
+        if (isDragged && !isConnect)
         {
-            if (mSelectedWire != null && !isConnect)
-            {
-                mWireBody.localRotation = Quaternion.Euler(Vector3.zero);
-                mWireBody.sizeDelta = new Vector2(0f, mWireBody.sizeDelta.y);
-                mSelectedWire = null;
-            }
+            SetTarget(Input.mousePosition, -40f);
         }
-
-
-        if (mSelectedWire !=null && !isConnect)
-        {
-            float angle = Vector2.SignedAngle(transform.position + Vector3.right - transform.position, Input.mousePosition - transform.position);
-            float distance = Vector2.Distance(mWireBody.transform.position, Input.mousePosition) - offset;
-            mWireBody.localRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
-            mWireBody.sizeDelta = new Vector2(distance * (1 / mGameCanvas.transform.localScale.x), mWireBody.sizeDelta.y);
-        }
-
-        if (target != null && isConnect)
-        {
-            float angle = Vector2.SignedAngle(transform.position + Vector3.right - transform.position, target.transform.position - transform.position);
-            float distance = Vector2.Distance(mWireBody.transform.position, target.transform.position) - offset;
-            mWireBody.localRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
-            mWireBody.sizeDelta = new Vector2(distance * (1 / mGameCanvas.transform.localScale.x), mWireBody.sizeDelta.y);
-        }
-
-
     }
+
+    public void SetTarget(Vector3 targetPosition, float offset)
+    {
+        float angle = Vector2.SignedAngle(transform.position + Vector3.right - transform.position, targetPosition - transform.position);
+        float distance = Vector2.Distance(mWireBody.transform.position, targetPosition) + offset;
+        mWireBody.localRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
+        mWireBody.sizeDelta = new Vector2(distance * (1 / mGameCanvas.transform.localScale.x), mWireBody.sizeDelta.y);
+    }
+
+    public void ResetTarget()
+    {
+        mWireBody.localRotation = Quaternion.Euler(Vector3.zero);
+        mWireBody.sizeDelta = new Vector2(0f, mWireBody.sizeDelta.y);
+    }
+
+
 }
