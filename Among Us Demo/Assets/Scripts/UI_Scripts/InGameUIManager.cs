@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class InGameUIManager : MonoBehaviour
 {
@@ -20,6 +22,12 @@ public class InGameUIManager : MonoBehaviour
         get { return killButtonUI; }
     }
 
+    [SerializeField]
+    private UseButtonUI useButtonUI;
+    public UseButtonUI UseButtonUI
+    {
+        get { return useButtonUI; }
+    }
 
     [SerializeField]
     private KillUI killUI;
@@ -50,9 +58,31 @@ public class InGameUIManager : MonoBehaviour
     private EjectionUI ejectionUI;
     public EjectionUI EjectionUI { get { return ejectionUI; } }
 
+    [SerializeField]
+    private GameObject taskUI;
+    public GameObject TaskUI { get { return taskUI; } }
+
+
+
+    public void SetUesButton(UnityAction action)
+    {
+        //useButtonUI.image.sprite = sprite;
+        useButtonUI.useButton.onClick.AddListener(action);
+        useButtonUI.useButton.interactable = true;
+    }
+
+    public void UnSetUesButton()
+    {
+        //useButtonUI.image.sprite = sprite;
+        useButtonUI.useButton.onClick.RemoveAllListeners();
+        useButtonUI.useButton.interactable = false;
+    }
+
+
     private void Awake()
     {
         Instance = this;
     }
+
 
 }

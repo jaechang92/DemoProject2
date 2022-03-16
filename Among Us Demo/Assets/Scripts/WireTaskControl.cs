@@ -87,5 +87,10 @@ public class WireTaskControl : MonoBehaviour, IPointerDownHandler , IPointerUpHa
         }
     }
 
-   
+
+    public void Open()
+    {
+        AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = false;
+    }
+
 }
