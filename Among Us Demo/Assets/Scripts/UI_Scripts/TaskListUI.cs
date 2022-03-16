@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Mirror;
 
 
 
@@ -15,6 +16,17 @@ public class TaskListUI : MonoBehaviour, IPointerClickHandler
 
     private bool isOpen = false;
     private float timer;
+
+    private int commonTaskCount;
+    private int complexTaskCount;
+    private int simpleTaskCount;
+    private void Start()
+    {
+        var roomManager = NetworkManager.singleton as AmongUsRoomManager;
+        commonTaskCount = roomManager.gameRuleData.commonTask;
+        complexTaskCount = roomManager.gameRuleData.complexTask;
+        simpleTaskCount = roomManager.gameRuleData.simpleTask;
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -39,9 +51,7 @@ public class TaskListUI : MonoBehaviour, IPointerClickHandler
             float dest = isOpen ? offset : -taskListUITransform.sizeDelta.x;
             taskListUITransform.anchoredPosition = new Vector2(Mathf.Lerp(start, dest, timer), taskListUITransform.anchoredPosition.y);
             yield return null;
-
         }
-
     }
 
 

@@ -20,10 +20,12 @@ public class LeftWire : MonoBehaviour
 
     [SerializeField]
     public List<Image> changeColorList;
-
+    [SerializeField]
     private Canvas mGameCanvas;
 
     public bool isDragged = false;
+
+
     private void InitSetting()
     {
         mWireBody.localRotation = Quaternion.Euler(Vector3.zero);
@@ -35,6 +37,7 @@ public class LeftWire : MonoBehaviour
     {
         mGameCanvas = FindObjectOfType<Canvas>();
         InitSetting();
+        
     }
 
     void Update()
@@ -50,7 +53,11 @@ public class LeftWire : MonoBehaviour
         float angle = Vector2.SignedAngle(transform.position + Vector3.right - transform.position, targetPosition - transform.position);
         float distance = Vector2.Distance(mWireBody.transform.position, targetPosition) + offset;
         mWireBody.localRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
-        mWireBody.sizeDelta = new Vector2(distance * (1 / mGameCanvas.transform.localScale.x), mWireBody.sizeDelta.y);
+        mWireBody.sizeDelta = new Vector2(distance , mWireBody.sizeDelta.y);
+        Debug.Log(1 / mGameCanvas.transform.localScale.x);
+        Debug.Log(mGameCanvas.transform.localScale.x);
+        Debug.Log(mWireBody.sizeDelta);
+        Debug.Log(distance);
     }
 
     public void ResetTarget()

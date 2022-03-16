@@ -62,7 +62,11 @@ public class InGameUIManager : MonoBehaviour
     private GameObject taskUI;
     public GameObject TaskUI { get { return taskUI; } }
 
+    [SerializeField]
+    private TaskManager taskManager;
+    public TaskManager TaskManager { get { return taskManager; }  }
 
+    
 
     public void SetUesButton(UnityAction action)
     {
@@ -76,6 +80,12 @@ public class InGameUIManager : MonoBehaviour
         //useButtonUI.image.sprite = sprite;
         useButtonUI.useButton.onClick.RemoveAllListeners();
         useButtonUI.useButton.interactable = false;
+    }
+
+
+    public void nowTask(int id)
+    {
+        int taskIndex = taskManager.GetTaskIndex(id);
     }
 
 

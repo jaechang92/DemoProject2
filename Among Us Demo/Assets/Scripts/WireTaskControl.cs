@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Mirror;
 
 
 public class WireTaskControl : MonoBehaviour, IPointerDownHandler , IPointerUpHandler
@@ -15,7 +16,7 @@ public class WireTaskControl : MonoBehaviour, IPointerDownHandler , IPointerUpHa
 
     [SerializeField]
     private float offset = 15f;
-
+    
     private LeftWire nowLeftWire;
     private int connectCount;
     public void OnPointerDown(PointerEventData eventData)
@@ -30,6 +31,10 @@ public class WireTaskControl : MonoBehaviour, IPointerDownHandler , IPointerUpHa
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (nowLeftWire == null)
+        {
+            return;
+        }
         nowLeftWire.isDragged = false;
         if (nowLeftWire.isConnect)
         {
