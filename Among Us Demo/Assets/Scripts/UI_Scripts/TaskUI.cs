@@ -16,4 +16,12 @@ public class TaskUI : MonoBehaviour
         gameObject.SetActive(false);
         AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = true;
     }
+
+    public void DownloadButton(ProgressBar pb)
+    {
+        
+        StartCoroutine(pb.UpdateLodingGage());
+        //gameObject.SetActive(false);
+
+    }
 }
