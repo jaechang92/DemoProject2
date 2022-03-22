@@ -7,6 +7,7 @@ TagManager:
   - task_wire
   - Mission
   - Asteroid
+  - BindArea
   layers:
   - Default
   - TransparentFX

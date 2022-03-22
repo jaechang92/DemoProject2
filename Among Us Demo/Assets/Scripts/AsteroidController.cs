@@ -18,6 +18,7 @@ public class AsteroidController : MonoBehaviour
     private Vector2 speed;
     [SerializeField]
     private float rotSpeed;
+    public int idx;
     void Init()
     {
         m_Image = GetComponent<Image>();
@@ -26,7 +27,13 @@ public class AsteroidController : MonoBehaviour
         m_collider = GetComponent<BoxCollider2D>();
         m_collider.size = new Vector2(rt.rect.width, rt.rect.height);
         origin = rt.anchoredPosition;
-        speed = new Vector2(Random.Range(100, 500), Random.Range(-300, 300));
+        speed = new Vector2(Random.Range(-500, -100), Random.Range(-300, 300));
+    }
+
+    public void Destroyed()
+    {
+        m_Image.SetNativeSize();
+        m_collider.size = new Vector2(rt.rect.width, rt.rect.height);
     }
 
     void Start()
@@ -51,7 +58,10 @@ public class AsteroidController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Destroy(gameObject);
+        if (collision.CompareTag("BindArea"))
+        {
+            Destroy(gameObject);
+        }
     }
 
 }
