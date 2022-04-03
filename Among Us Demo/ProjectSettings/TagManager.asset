@@ -8,6 +8,7 @@ TagManager:
   - Mission
   - Asteroid
   - BindArea
+  - UIButton
   layers:
   - Default
   - TransparentFX
