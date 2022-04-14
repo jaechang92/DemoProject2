@@ -14,8 +14,10 @@ public class SwipeCardMission : MonoBehaviour
     [SerializeField]
     private float min, max;
 
+    [SerializeField]
     private float currentTime = 0;
     private bool isChecked = false;
+    [SerializeField]
     private bool isClear = false;
     private void OnEnable()
     {
@@ -26,17 +28,13 @@ public class SwipeCardMission : MonoBehaviour
 
     private void Update()
     {
-        card.anchoredPosition = Vector2.MoveTowards(card.anchoredPosition, cardEndPoint, 300 * Time.deltaTime);
-        card.localScale = Vector3.MoveTowards(card.localScale, Vector3.one, Time.deltaTime);
-        if (isChecked)
+        SetCardPosition();
+        if (Input.GetMouseButton(0) && isChecked)
         {
             currentTime += Time.deltaTime;
-        }
+            
+            card.transform.position = new Vector3(Input.mousePosition.x, card.transform.position.y, card.transform.position.z);
 
-
-        if (Input.GetMouseButton(0))
-        {
-            card.anchoredPosition= new Vector2(Input.mousePosition.x, card.anchoredPosition.y);
         }
     }
 
@@ -52,17 +50,31 @@ public class SwipeCardMission : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject == card.gameObject)
+        if (collision.gameObject == card.gameObject && Input.GetMouseButton(0))
         {
             isChecked = false;
             if (currentTime >= min && currentTime <= max)
             {
                 isClear = true;
-                Invoke("CloseUI", 1.0f);
+                Invoke("CloseUI", 3.0f);
             }
         }
     }
 
+    private void SetCardPosition()
+    {
+        if (!isClear)
+        {
+            card.anchoredPosition = Vector2.MoveTowards(card.anchoredPosition, cardEndPoint, 500 * Time.deltaTime);
+            card.localScale = Vector3.MoveTowards(card.localScale, Vector3.one, Time.deltaTime);
+        }
+        else
+        {
+            card.anchoredPosition = Vector2.MoveTowards(card.anchoredPosition, cardStartPoint, 500 * Time.deltaTime);
+            card.localScale = Vector3.MoveTowards(card.localScale, new Vector3(.8f, .8f, 1), Time.deltaTime);
+        }
+        
+    }
     private void CloseUI()
     {
         gameObject.SetActive(false);

@@ -7797,7 +7797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0624b61cb678c04e91d4ea18925adf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineColor: {r: 0.99607843, g: 1, b: 0, a: 1}
 --- !u!1 &792903928
 GameObject:
   m_ObjectHideFlags: 0
