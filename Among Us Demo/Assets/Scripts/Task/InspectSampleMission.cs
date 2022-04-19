@@ -37,10 +37,19 @@ public class InspectSampleMission : MonoBehaviour
     [SerializeField]
     private bool testTime;
 
+    [SerializeField]
+    private Animator ani;
+    [SerializeField]
+    private IEnumerator dispenser_Coroutine;
+
     private void OnEnable()
     {
-        StartCoroutine(medBay_dispenser_Coroutine());
+        
         missionObjectIdx = sampleButtons.Length;
+        if (!isWaiting)
+        {
+            ani.Play("Medbox");
+        }
     }
 
     private void Update()
@@ -83,6 +92,12 @@ public class InspectSampleMission : MonoBehaviour
             idx++;
             yield return waitTime;
         }
+
+        if (!isWaiting)
+        {
+            isWaiting = true;
+            checkTimeOrigin = DateTime.Now;
+        }
     }
 
     public void MedBay_SampleButton()
@@ -106,11 +121,16 @@ public class InspectSampleMission : MonoBehaviour
 
     public void MedBay_Button()
     {
-        if (!isWaiting)
+        if (dispenser_Coroutine == null)
         {
-            isWaiting = true;
-            checkTimeOrigin = DateTime.Now;
+            dispenser_Coroutine = medBay_dispenser_Coroutine();
+            StartCoroutine(dispenser_Coroutine);
         }
+        //if (!isWaiting)
+        //{
+        //    isWaiting = true;
+        //    checkTimeOrigin = DateTime.Now;
+        //}
     }
 
     private void CloseUI()
