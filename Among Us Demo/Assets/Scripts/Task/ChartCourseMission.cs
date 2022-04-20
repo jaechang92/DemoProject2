@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class ChartCourseMission : MonoBehaviour
 {
     [SerializeField]
@@ -17,10 +18,21 @@ public class ChartCourseMission : MonoBehaviour
     private bool isClear = false;
     [SerializeField]
     private List<List<Transform>> llt = new List<List<Transform>>();
-
+    [SerializeField]
+    private Transform LineParent;
+    [SerializeField]
+    private GameObject LineObject;
+    [SerializeField]
+    private List<Transform> Lines;
 
     private void Awake()
     {
+        for (int i = 0; i < checkPoints.Count - 1; i++)
+        {
+            GameObject obj = Instantiate(LineObject, LineParent);
+            Lines.Add(obj.transform);
+        }
+
         for (int i = 0; i < checkPoints.Count; i++)
         {
             Transform[] checkpointInObj = checkPoints[i].GetComponentsInChildren<Transform>();
@@ -46,6 +58,11 @@ public class ChartCourseMission : MonoBehaviour
             //checkPoints[i].transform.position = new Vector3(checkPoints[i].transform.position.x, Random.Range(-130, 130), checkPoints[i].transform.position.z);
         }
         nav_chartCourse_ship.GetComponent<RectTransform>().anchoredPosition = checkPoints[0].GetComponent<RectTransform>().anchoredPosition;
+
+
+
+        // 라인 생성
+        CreateLine();
     }
 
     private void OnEnable()
@@ -113,10 +130,27 @@ public class ChartCourseMission : MonoBehaviour
             Invoke("CloseUI", 1.0f);
         }
     }
-
-
     private void CloseUI()
     {
         gameObject.SetActive(false);
     }
+
+
+    private void CreateLine()
+    {
+        float lineHeight = LineObject.GetComponent<RectTransform>().rect.height;
+        for (int i = 0; i < checkPoints.Count-1; i++)
+        {
+            float dist = Vector3.Distance(checkPoints[i + 1].transform.position, checkPoints[i].transform.position);
+            float lineCount = dist / lineHeight;
+            
+            Vector3 direction = checkPoints[i + 1].transform.position - checkPoints[i].transform.position;
+            Lines[i].transform.up = direction;
+            ImageScroll thisLineScrpit = Lines[i].GetComponent<ImageScroll>();
+            thisLineScrpit.DiffuseTillingYSize = lineCount;
+            thisLineScrpit.RectHeight = dist;
+            thisLineScrpit.transform.position = checkPoints[i].transform.position;
+        }
+    }
+
 }
