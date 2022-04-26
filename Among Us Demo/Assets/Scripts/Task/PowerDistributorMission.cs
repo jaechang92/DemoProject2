@@ -24,7 +24,7 @@ public class PowerDistributorMission : MonoBehaviour
     [SerializeField]
     private float vibrationTIme = 0.0625f;
     [SerializeField]
-    private Vector4 minMaxPair;
+    private Vector3 minMaxRangePair;
     [SerializeField]
     private bool isClear = false;
     private void init()
@@ -35,7 +35,9 @@ public class PowerDistributorMission : MonoBehaviour
         {
             calibratorSpins[i].eulerAngles = new Vector3(0, 0, -140);
             calibratorGauges[i].VibrationTIme = vibrationTIme;
-            calibratorGauges[i].GageRange = new Vector2(minMaxPair.x, minMaxPair.y);
+            calibratorGauges[i].AmountCenterValue = minMaxRangePair.x;
+            calibratorGauges[i].GageRange = minMaxRangePair.z;
+            //calibratorGauges[i].GageRange = new Vector2(minMaxPair.x, minMaxPair.y);
             calibratorContactBaseLits[i].gameObject.SetActive(false);
         }
 
@@ -65,12 +67,14 @@ public class PowerDistributorMission : MonoBehaviour
 
         if (calibratorSpins[nowIdx].eulerAngles.z <= correctRange && calibratorSpins[nowIdx].eulerAngles.z >= -correctRange)
         {
-            calibratorGauges[nowIdx].GageRange = new Vector2(minMaxPair.z, minMaxPair.w);
+            // 맥스
+            calibratorGauges[nowIdx].AmountCenterValue = minMaxRangePair.y;
             calibratorContactBaseLits[nowIdx].gameObject.SetActive(true);
         }
         else
         {
-            calibratorGauges[nowIdx].GageRange = new Vector2(minMaxPair.x, minMaxPair.y);
+            // 민
+            calibratorGauges[nowIdx].AmountCenterValue = minMaxRangePair.x;
             calibratorContactBaseLits[nowIdx].gameObject.SetActive(false);
         }
     }
@@ -84,7 +88,7 @@ public class PowerDistributorMission : MonoBehaviour
             {
                 calibratorContactBaseLits[nowIdx].gameObject.SetActive(true);
                 calibratorSpins[nowIdx].eulerAngles = Vector3.zero;
-                calibratorGauges[nowIdx].GageRange = new Vector2(minMaxPair.z, minMaxPair.w);
+                calibratorGauges[nowIdx].AmountCenterValue = minMaxRangePair.y;
                 //StartCoroutine(VibrationGage(nowIdx));
                 
                 nowIdx++;
