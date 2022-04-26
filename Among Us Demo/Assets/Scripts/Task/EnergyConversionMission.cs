@@ -72,11 +72,11 @@ public class EnergyConversionMission : MonoBehaviour
             float originAmount = switchAmount;
             switchPosition = new Vector3(select.transform.position.x, Input.mousePosition.y, select.transform.position.z);
             // 리미트 -80 ~ -200
-            switchPosition.y = Mathf.Clamp(switchPosition.y, bottomPosition.position.y, topPosition.position.y);
+            switchPosition.y = Mathf.Clamp(switchPosition.y, bottomPosition.position.y + (topPosition.position.y - bottomPosition.position.y)*0.1f, topPosition.position.y);
             select.transform.position = switchPosition;
             switchAmount = (switchPosition.y - bottomPosition.position.y) / (topPosition.position.y - bottomPosition.position.y);
             // 변화값 델타
-            deltaAmount = originAmount - switchAmount;
+            deltaAmount = switchAmount - originAmount;
             // 전체 파이는 0.5 * 8 = 4
             // 현재 스위치의 어마운트를 빼준다 4-switchAmount
             // 나머지를 균등분배해준다
@@ -86,18 +86,25 @@ public class EnergyConversionMission : MonoBehaviour
             int selectIdx;
             kvp.TryGetValue(select.transform, out selectIdx);
 
-            for (int i = 0; i < gages.Count; i++)
-            {
-                if (selectIdx == i)
-                {
-                    gages[i].AmountCenterValue = switchAmount;
-                }
-                else
-                {
-                    //gages[i].AmountCenterValue -= deltaAmount / 7 * gages[i].calibratorGauges.fillAmount * 2;
-                    gages[i].AmountCenterValue -= deltaAmount;
-                }
-            }
+
+            //---------------------------------------------------------------
+            gages[selectIdx].AmountCenterValue = switchAmount;
+            CalculAmountEnergy(selectIdx, deltaAmount);
+
+
+            //for (int i = 0; i < gages.Count; i++)
+            //{
+            //    if (selectIdx == i)
+            //    {
+            //        gages[i].AmountCenterValue = switchAmount;
+            //    }
+            //    else
+            //    {
+                   
+            //        //gages[i].AmountCenterValue -= deltaAmount / 7 * gages[i].calibratorGauges.fillAmount * 2;
+            //        gages[i].AmountCenterValue -= deltaAmount;
+            //    }
+            //}
 
             //foreach (var item in gages)
             //{
@@ -128,5 +135,41 @@ public class EnergyConversionMission : MonoBehaviour
     {
 
     }
+
+    private float returnEnergy = 0;
+    private void CalculAmountEnergy(int selectIdx, float deltaEnergy)
+    {
+        deltaEnergy = -deltaEnergy;
+        returnEnergy = 0;
+
+        float temp = 0;
+        for (int i = 0; i < gages.Count; i++)
+        {
+            if (selectIdx == i)
+            {
+                continue;
+            }
+            if (gages[i].AmountCenterValue <= 0)
+            {
+                continue;
+            }
+            temp += gages[i].AmountCenterValue;
+        }
+
+        for (int i = 0; i < gages.Count; i++)
+        {
+            if (selectIdx == i)
+            {
+                continue;
+            }
+            gages[i].AmountCenterValue += deltaEnergy * gages[i].AmountCenterValue / temp;
+            if (gages[i].AmountCenterValue < 0.1f)
+            {
+                gages[i].AmountCenterValue = 0.1f;
+            }
+
+        }
+    }
+
 
 }
