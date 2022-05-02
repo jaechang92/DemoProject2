@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 //[System.Serializable]
 //struct MyDictionary
 //{
@@ -16,6 +17,7 @@ using UnityEngine;
 
 public class EnergyConversionMission : MonoBehaviour
 {
+    
     //[SerializeField]
     //private MyDictionary test;
     [SerializeField]
@@ -30,6 +32,7 @@ public class EnergyConversionMission : MonoBehaviour
     private Transform topPosition;
     [SerializeField]
     private Transform bottomPosition;
+    [SerializeField]
     private Vector3 switchPosition;
 
     [SerializeField]
@@ -69,7 +72,9 @@ public class EnergyConversionMission : MonoBehaviour
 
         if (select != null)
         {
-            float originAmount = switchAmount;
+            int selectIdx;
+            kvp.TryGetValue(select.transform, out selectIdx);
+            float originAmount = gages[selectIdx].AmountCenterValue;
             switchPosition = new Vector3(select.transform.position.x, Input.mousePosition.y, select.transform.position.z);
             // 리미트 -80 ~ -200
             switchPosition.y = Mathf.Clamp(switchPosition.y, bottomPosition.position.y + (topPosition.position.y - bottomPosition.position.y)*0.1f, topPosition.position.y);
@@ -83,14 +88,10 @@ public class EnergyConversionMission : MonoBehaviour
             // 균등분배 할때는 가중치를 둔다 많은건 많이 적은건 적게
             // (4 - switchAmount) / 7 * 원본 * 2
             switchAmountOther = (4 - switchAmount) / 7;
-            int selectIdx;
-            kvp.TryGetValue(select.transform, out selectIdx);
-
-
             //---------------------------------------------------------------
             gages[selectIdx].AmountCenterValue = switchAmount;
             CalculAmountEnergy(selectIdx, deltaAmount);
-
+            deltaAmount = 0;
 
             //for (int i = 0; i < gages.Count; i++)
             //{
@@ -100,7 +101,7 @@ public class EnergyConversionMission : MonoBehaviour
             //    }
             //    else
             //    {
-                   
+
             //        //gages[i].AmountCenterValue -= deltaAmount / 7 * gages[i].calibratorGauges.fillAmount * 2;
             //        gages[i].AmountCenterValue -= deltaAmount;
             //    }
@@ -131,44 +132,84 @@ public class EnergyConversionMission : MonoBehaviour
     //    }
     //}
 
-    private void SetWAmount()
-    {
-
-    }
 
     private float returnEnergy = 0;
+    private Queue<int> gagesIdx = new Queue<int>();
     private void CalculAmountEnergy(int selectIdx, float deltaEnergy)
     {
-        deltaEnergy = -deltaEnergy;
         returnEnergy = 0;
 
         float temp = 0;
-        for (int i = 0; i < gages.Count; i++)
-        {
-            if (selectIdx == i)
-            {
-                continue;
-            }
-            if (gages[i].AmountCenterValue <= 0)
-            {
-                continue;
-            }
-            temp += gages[i].AmountCenterValue;
-        }
+        
+        // 뺴줘야되는 경우와 더해줘야 되는 2가지 케이스
 
-        for (int i = 0; i < gages.Count; i++)
+        if (deltaEnergy > 0)
         {
-            if (selectIdx == i)
+            // 에너지가 양수여서 빼줘야 하는 경우
+            for (int i = 0; i < gages.Count; i++)
             {
-                continue;
-            }
-            gages[i].AmountCenterValue += deltaEnergy * gages[i].AmountCenterValue / temp;
-            if (gages[i].AmountCenterValue < 0.1f)
-            {
-                gages[i].AmountCenterValue = 0.1f;
+                if (selectIdx == i)
+                {
+                    continue;
+                }
+                if (gages[i].AmountCenterValue <= 0.1f)
+                {
+                    continue;
+                }
+                gagesIdx.Enqueue(i);
+                temp += gages[i].AmountCenterValue;
             }
 
+            while (gagesIdx.Count > 0)
+            {
+                int gageIndex = gagesIdx.Dequeue();
+                gages[gageIndex].AmountCenterValue -= deltaEnergy * gages[gageIndex].AmountCenterValue / temp;
+                if (gages[gageIndex].AmountCenterValue < 0.1f)
+                {
+                    returnEnergy += 0.1f - gages[gageIndex].AmountCenterValue;
+                    gages[gageIndex].AmountCenterValue = 0.1f;
+                }
+            }
+            if (returnEnergy > 0)
+            {
+                CalculAmountEnergy(selectIdx, returnEnergy);
+            }
         }
+        else if(deltaEnergy < 0)
+        {
+            for (int i = 0; i < gages.Count; i++)
+            {
+                if (selectIdx == i)
+                {
+                    continue;
+                }
+                if (gages[i].AmountCenterValue >= 1.0f)
+                {
+                    continue;
+                }
+                gagesIdx.Enqueue(i);
+                temp += gages[i].AmountCenterValue;
+            }
+
+            while (gagesIdx.Count > 0)
+            {
+                int gageIndex = gagesIdx.Dequeue();
+                gages[gageIndex].AmountCenterValue -= deltaEnergy * gages[gageIndex].AmountCenterValue / temp;
+                if (gages[gageIndex].AmountCenterValue > 1.0f)
+                {
+                    returnEnergy += 1.0f - gages[gageIndex].AmountCenterValue;
+                    gages[gageIndex].AmountCenterValue = 1.0f;
+                }
+            }
+
+            if (returnEnergy < 0)
+            {
+                CalculAmountEnergy(selectIdx, returnEnergy);
+            }
+        }
+
+
+        
     }
 
 
