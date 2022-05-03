@@ -40,7 +40,6 @@ public struct GameRuleData
     public int commonTask;
     public int complexTask;
     public int simpleTask;
-
 }
 
 public class GameRuleStore : NetworkBehaviour

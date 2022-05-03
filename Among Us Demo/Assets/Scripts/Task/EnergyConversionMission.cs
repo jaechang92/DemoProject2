@@ -2,19 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-//[System.Serializable]
-//struct MyDictionary
-//{
-//    public List<Transform> tr;
-//    public List<int> idx;
-//    public void Add(Transform _tr, int _idx)
-//    {
-//        tr.Add(_tr);
-//        idx.Add(_idx);
-//    }
-//}
-
 public class EnergyConversionMission : MonoBehaviour
 {
     
@@ -39,8 +26,16 @@ public class EnergyConversionMission : MonoBehaviour
     private float switchAmount;
     [SerializeField]
     private float switchAmountOther;
+    [SerializeField]
+    private bool isClear = false;
+    private int missionIdx;
+    private GameObject electricity_Divert_switchShadow;
     void Start()
     {
+        missionIdx = Random.Range(0, 9);
+        electricity_Divert_switchShadow = switchs[missionIdx].GetChild(0).gameObject;
+        electricity_Divert_switchShadow.SetActive(false);
+
         for (int i = 0; i < switchs.Count; i++)
         {
             kvp.Add(switchs[i], i);
@@ -56,6 +51,8 @@ public class EnergyConversionMission : MonoBehaviour
     float deltaAmount;
     void Update()
     {
+        if (isClear) return;
+        
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition,Vector2.right, 1);
@@ -93,45 +90,15 @@ public class EnergyConversionMission : MonoBehaviour
             CalculAmountEnergy(selectIdx, deltaAmount);
             deltaAmount = 0;
 
-            //for (int i = 0; i < gages.Count; i++)
-            //{
-            //    if (selectIdx == i)
-            //    {
-            //        gages[i].AmountCenterValue = switchAmount;
-            //    }
-            //    else
-            //    {
+        }
 
-            //        //gages[i].AmountCenterValue -= deltaAmount / 7 * gages[i].calibratorGauges.fillAmount * 2;
-            //        gages[i].AmountCenterValue -= deltaAmount;
-            //    }
-            //}
-
-            //foreach (var item in gages)
-            //{
-            //    if (item != select)
-            //    {
-            //        item.AmountCenterValue -= deltaAmount / 7 * item.calibratorGauges.fillAmount * 2;
-            //        //item.GageRange = new Vector2(switchAmountOther - 0.01f, switchAmountOther + 0.01f);
-            //    }
-            //}
-            //select.transform.position.Set(select.transform.position.x, Input.mousePosition.y, select.transform.position.z);
+        if (gages[missionIdx].AmountCenterValue == 1.0f)
+        {
+            electricity_Divert_switchShadow.SetActive(true);
+            isClear = true;
+            Invoke("CloseUI", 1.0f);
         }
     }
-
-    //private int GetSelectIdx(Transform obj)
-    //{
-    //    int i = 0;
-    //    foreach (var item in switchs)
-    //    {
-    //        if (obj == item)
-    //        {
-    //            return i;
-    //        }
-    //        i++;
-    //    }
-    //}
-
 
     private float returnEnergy = 0;
     private Queue<int> gagesIdx = new Queue<int>();
@@ -140,7 +107,11 @@ public class EnergyConversionMission : MonoBehaviour
         returnEnergy = 0;
 
         float temp = 0;
+
+        Vector3 tempPos;
+
         
+
         // 뺴줘야되는 경우와 더해줘야 되는 2가지 케이스
 
         if (deltaEnergy > 0)
@@ -169,6 +140,7 @@ public class EnergyConversionMission : MonoBehaviour
                     returnEnergy += 0.1f - gages[gageIndex].AmountCenterValue;
                     gages[gageIndex].AmountCenterValue = 0.1f;
                 }
+                switchs[gageIndex].position = new Vector3(switchs[gageIndex].position.x, bottomPosition.position.y +  (topPosition.position.y - bottomPosition.position.y) * gages[gageIndex].AmountCenterValue, switchs[gageIndex].position.z);
             }
             if (returnEnergy > 0)
             {
@@ -195,11 +167,13 @@ public class EnergyConversionMission : MonoBehaviour
             {
                 int gageIndex = gagesIdx.Dequeue();
                 gages[gageIndex].AmountCenterValue -= deltaEnergy * gages[gageIndex].AmountCenterValue / temp;
+
                 if (gages[gageIndex].AmountCenterValue > 1.0f)
                 {
                     returnEnergy += 1.0f - gages[gageIndex].AmountCenterValue;
                     gages[gageIndex].AmountCenterValue = 1.0f;
                 }
+                switchs[gageIndex].position = new Vector3(switchs[gageIndex].position.x, bottomPosition.position.y + (topPosition.position.y - bottomPosition.position.y) * gages[gageIndex].AmountCenterValue, switchs[gageIndex].position.z);
             }
 
             if (returnEnergy < 0)
@@ -207,10 +181,11 @@ public class EnergyConversionMission : MonoBehaviour
                 CalculAmountEnergy(selectIdx, returnEnergy);
             }
         }
-
-
-        
     }
 
+    private void CloseUI()
+    {
+        gameObject.SetActive(false);
+    }
 
 }
