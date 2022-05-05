@@ -1,20 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class CustomizeLaptop : MonoBehaviour
+public class HighlightedObject : MonoBehaviour
 {
     [SerializeField]
     private Sprite useButtonSprite;
     private SpriteRenderer spriteRenderer;
 
 
+    private AmongUsRoomManager manager;
     // Start is called before the first frame update
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         var inst = Instantiate(spriteRenderer.material);
         spriteRenderer.material = inst;
+        manager = NetworkManager.singleton as AmongUsRoomManager;
 
     }
 
@@ -24,7 +27,10 @@ public class CustomizeLaptop : MonoBehaviour
         if (character != null && character.hasAuthority)
         {
             spriteRenderer.material.SetFloat("_Highlighted", 1);
-            LobbyUIManager.Instance.SetUesButton(useButtonSprite, OnClickUse);
+            if (manager.nowScene == manager.RoomScene)
+            {
+                LobbyUIManager.Instance.SetUesButton(useButtonSprite, OnClickUse);
+            }
         }
     }
 
@@ -34,7 +40,10 @@ public class CustomizeLaptop : MonoBehaviour
         if (character != null && character.hasAuthority)
         {
             spriteRenderer.material.SetFloat("_Highlighted", 0);
-            LobbyUIManager.Instance.UnSetUesButton();
+            if (manager.nowScene == manager.RoomScene)
+            {
+                LobbyUIManager.Instance.UnSetUesButton();
+            }
         }
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using Mirror;
+using UnityEngine.SceneManagement;
 
 public class LobbyUIManager : MonoBehaviour
 {
@@ -75,7 +76,7 @@ public class LobbyUIManager : MonoBehaviour
         }
 
         manager.ServerChangeScene(manager.GameplayScene);
-
+        manager.nowScene = manager.GameplayScene;
 
     }
 }

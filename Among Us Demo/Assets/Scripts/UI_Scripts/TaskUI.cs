@@ -6,7 +6,15 @@ public class TaskUI : MonoBehaviour
 {
     [SerializeField]
     private List<GameObject> taskList;
-    
+
+    private void Start()
+    {
+        for (int i = 0; i < taskList.Count; i++)
+        {
+            taskList[i].SetActive(false);
+        }
+    }
+
     public void Close()
     {
         for (int i = 0; i < taskList.Count; i++)
@@ -17,11 +25,5 @@ public class TaskUI : MonoBehaviour
         AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = true;
     }
 
-    public void DownloadButton(ProgressBar pb)
-    {
-        
-        StartCoroutine(pb.UpdateLodingGage());
-        //gameObject.SetActive(false);
 
-    }
 }

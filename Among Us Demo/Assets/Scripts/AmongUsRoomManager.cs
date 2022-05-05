@@ -6,7 +6,7 @@ using Mirror;
 public class AmongUsRoomManager : NetworkRoomManager
 {
     public GameRuleData gameRuleData;
-
+    public string nowScene;
     public int minPlayerCount;
     public int imposterCount;
 

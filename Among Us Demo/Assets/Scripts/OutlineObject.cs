@@ -17,6 +17,7 @@ public class OutlineObject : MonoBehaviour
         var inst = Instantiate(spriteRenderer.material);
         spriteRenderer.material = inst;
         spriteRenderer.material.SetColor("_OutlineColor", outlineColor);
+        spriteRenderer.enabled = false;
 
     }
 

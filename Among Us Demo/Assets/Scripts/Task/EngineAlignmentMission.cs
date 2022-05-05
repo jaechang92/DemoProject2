@@ -51,7 +51,7 @@ public class EngineAlignmentMission : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.right, 1f);
-            if (hit.collider.gameObject == engineAlign_slider.gameObject)
+            if (hit.collider != null &&  hit.collider.gameObject == engineAlign_slider.gameObject)
             {
                 trace = true;
             }
@@ -81,6 +81,7 @@ public class EngineAlignmentMission : MonoBehaviour
         {
             engineAlign_slider.eulerAngles = Vector3.zero;
             isClear = true;
+            Invoke("CloseUI", 1.0f);
         }
     }
 
@@ -134,6 +135,11 @@ public class EngineAlignmentMission : MonoBehaviour
 
 
         return Vector2.zero;
+    }
+
+    private void CloseUI()
+    {
+        gameObject.SetActive(false);
     }
 
 }

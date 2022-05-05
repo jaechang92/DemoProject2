@@ -83,10 +83,6 @@ public class InGameUIManager : MonoBehaviour
     }
 
 
-    public void nowTask(int id)
-    {
-        int taskIndex = taskManager.GetTaskIndex(id);
-    }
 
 
     private void Awake()

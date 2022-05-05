@@ -15,7 +15,7 @@ public class ResponsiveObject : MonoBehaviour
         if (character != null && character.hasAuthority)
         {
             InGameUIManager.Instance.SetUesButton(OnClickUse);
-            InGameUIManager.Instance.nowTask(GetComponent<TaskData>().taskId);
+            
         }
     }
 
@@ -32,12 +32,12 @@ public class ResponsiveObject : MonoBehaviour
     {
         InGameUIManager.Instance.TaskUI.SetActive(true);
         activeObject.SetActive(true);
-        var childObject = activeObject.GetComponentsInChildren<GameObject>();
+        var childObject = activeObject.GetComponentsInChildren<Transform>();
         foreach (var child in childObject)
         {
-            if (child.activeSelf == false)
+            if (child.gameObject.activeSelf == false)
             {
-                child.SetActive(true);
+                child.gameObject.SetActive(true);
             }
         }
         AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = false;
