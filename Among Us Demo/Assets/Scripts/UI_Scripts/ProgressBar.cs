@@ -9,7 +9,8 @@ public class ProgressBar : MonoBehaviour
     private Image image;
     [SerializeField]
     private float completeTime;
-
+    [SerializeField]
+    private bool isClear = false;
     private float currentTime = 0;
 
     void Init()
@@ -34,14 +35,15 @@ public class ProgressBar : MonoBehaviour
             yield return null;
         }
 
-
         ClearTask();
     }
 
     public void ClearTask()
     {
+
         // 클리어했을때 해줘야 하는일
         // 테스크 매니저에 클리어 했다는 결과 값을 전달한다
+
     }
 
 }

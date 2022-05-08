@@ -56,7 +56,7 @@ public class SwipeCardMission : MonoBehaviour
             if (currentTime >= min && currentTime <= max)
             {
                 isClear = true;
-                Invoke("CloseUI", 3.0f);
+                InGameUIManager.Instance.CloseTaskUI(gameObject, 3.0f);
             }
         }
     }
@@ -74,9 +74,5 @@ public class SwipeCardMission : MonoBehaviour
             card.localScale = Vector3.MoveTowards(card.localScale, new Vector3(.8f, .8f, 1), Time.deltaTime);
         }
         
-    }
-    private void CloseUI()
-    {
-        gameObject.SetActive(false);
     }
 }

@@ -43,15 +43,9 @@ public class ManifoldMission : MonoBehaviour
         if (missionNumber == 11)
         {
             isClear = true;
-
-            Invoke("CloseUI", 1.0f);
+            InGameUIManager.Instance.CloseTaskUI(gameObject, 1.0f);
         }
 
-    }
-
-    private void CloseUI()
-    {
-        gameObject.SetActive(false);
     }
 
 }

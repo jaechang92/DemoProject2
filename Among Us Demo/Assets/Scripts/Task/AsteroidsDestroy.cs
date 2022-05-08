@@ -13,6 +13,7 @@ public class AsteroidsDestroy : MonoBehaviour , IPointerDownHandler, IPointerUpH
             AsteroidController target = eventData.pointerCurrentRaycast.gameObject.GetComponent<AsteroidController>();
             target.GetComponent<Image>().sprite = asteroidDestroySprite[target.idx];
             target.Destroyed();
+            destroyCount--;
         }
 
     }
@@ -36,24 +37,35 @@ public class AsteroidsDestroy : MonoBehaviour , IPointerDownHandler, IPointerUpH
     [SerializeField]
     private Transform spawnParent;
 
-
+    [SerializeField]
+    private int destroyCount;
+    [SerializeField]
+    private bool isClear = false;
 
     float spawnTime;
     float currentTime = 0;
     void Start()
     {
         spawnTime = Random.Range(0.2f, 0.8f);
+        destroyCount = 10;
     }
 
 
     void Update()
     {
+        if (isClear) return;
         currentTime += Time.deltaTime;
         if (currentTime >= spawnTime)
         {
             currentTime = 0;
             spawnTime = Random.Range(0.2f, 0.8f);
             AsteroidSpawn();
+        }
+
+        if (destroyCount <= 0)
+        {
+            isClear = true;
+            InGameUIManager.Instance.CloseTaskUI(gameObject, 1.0f);
         }
         
     }

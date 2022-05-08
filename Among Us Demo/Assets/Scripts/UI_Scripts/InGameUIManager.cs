@@ -63,10 +63,9 @@ public class InGameUIManager : MonoBehaviour
     public GameObject TaskUI { get { return taskUI; } }
 
     [SerializeField]
-    private TaskManager taskManager;
-    public TaskManager TaskManager { get { return taskManager; }  }
+    private Image tasksProgress;
+    public Image TasksProgress { get { return tasksProgress; } }
 
-    
 
     public void SetUesButton(UnityAction action)
     {
@@ -88,7 +87,22 @@ public class InGameUIManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        tasksProgress.fillAmount = 0;
     }
 
-
+    public void CloseTaskUI(GameObject obj,float waitTime)
+    {
+        TaskManager.instance.clearCount++;
+        InGameUIManager.Instance.UpdateTasksProgress();
+        StartCoroutine(CloseUI(obj, waitTime));
+    }
+    public IEnumerator CloseUI(GameObject obj, float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        obj.SetActive(false);
+    }
+    public void UpdateTasksProgress()
+    {
+        tasksProgress.fillAmount = (float)TaskManager.instance.clearCount / TaskManager.instance.taskCount;
+    }
 }

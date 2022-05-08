@@ -1471,6 +1471,7 @@ MonoBehaviour:
   _allPlayersReady: 0
   roomSlots: []
   clientIndex: 0
+  nowScene: 
   minPlayerCount: 0
   imposterCount: 0
 --- !u!1 &244536676
@@ -4488,6 +4489,7 @@ MonoBehaviour:
   - {fileID: 595277889}
   - {fileID: 444708372}
   - {fileID: 1478020445}
+  isTest: 1
 --- !u!1 &1002144866
 GameObject:
   m_ObjectHideFlags: 0

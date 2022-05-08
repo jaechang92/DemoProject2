@@ -76,14 +76,9 @@ public class StabilizeSteeringMission : MonoBehaviour
         {
             item.color = Color.green;
         }
-        Invoke("CloseUI", 1.0f);
+        InGameUIManager.Instance.CloseTaskUI(gameObject, 1.0f);
     }
 
-
-    private void CloseUI()
-    {
-        gameObject.SetActive(false);
-    }
 
     void OnDrawGizmosSelected()
     {

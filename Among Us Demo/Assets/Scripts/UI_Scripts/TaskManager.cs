@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class TaskManager : MonoBehaviour
+public class TaskManager : NetworkBehaviour
 {
     public static TaskManager instance;
     public int taskID;
@@ -13,6 +13,8 @@ public class TaskManager : MonoBehaviour
     private List<GameObject> taskUIList;
     [SerializeField]
     private List<int> taskIndexs;
+    [SyncVar]
+    public int clearCount;
     public int taskCount;
 
     private void Awake()

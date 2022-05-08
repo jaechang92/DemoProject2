@@ -16,7 +16,8 @@ public class WireTaskControl : MonoBehaviour, IPointerDownHandler , IPointerUpHa
 
     [SerializeField]
     private float offset = 15f;
-    
+    [SerializeField]
+    private bool isClear = false;
     private LeftWire nowLeftWire;
     private int connectCount;
     public void OnPointerDown(PointerEventData eventData)
@@ -47,7 +48,8 @@ public class WireTaskControl : MonoBehaviour, IPointerDownHandler , IPointerUpHa
             connectCount++;
             if (connectCount == 4)
             {
-                Debug.Log("미션클리어");
+                isClear = true;
+                InGameUIManager.Instance.CloseTaskUI(gameObject, 1.0f);
             }
         }
         else

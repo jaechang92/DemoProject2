@@ -44,17 +44,11 @@ public class ShieldMission : MonoBehaviour
             }
         }
         isClear = true;
-        Invoke("CloseUI", 1.0f);
-    }
-
-
-    private void CloseUI()
-    {
         foreach (var item in lamps)
         {
             item.SetBool("On", true);
         }
-        gameObject.SetActive(false);
+        InGameUIManager.Instance.CloseTaskUI(gameObject, 1.0f);
     }
 
 }

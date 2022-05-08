@@ -23,9 +23,11 @@ public class Garbage_leverController : MonoBehaviour
     private float forceValue;
     [SerializeField]
     private CameraShake shakeParent;
+    [SerializeField]
+    private bool isClear = false;
     void Start()
     {
-        // 레버의 바 길이 제한 걸기
+
         originSizeY = garbage_leverBars.sizeDelta.y;
         if (shakeParent == null)
         {
@@ -35,6 +37,7 @@ public class Garbage_leverController : MonoBehaviour
 
     void Update()
     {
+        if (isClear) return;
         if (Input.GetMouseButtonDown(0))
         {
             RaycastHit2D hit = Physics2D.Raycast(Input.mousePosition, Vector2.right, 1f);
@@ -79,6 +82,21 @@ public class Garbage_leverController : MonoBehaviour
             garbage_leverBars.sizeDelta = new Vector2(garbage_leverBars.sizeDelta.x, dist);
         }
 
-
+        CheckClear();
     }
+
+
+    private void CheckClear()
+    {
+        foreach (var leaf in leafs_rb)
+        {
+            if (garbage_Door.transform.position.y + garbage_Door.offset.y < leaf.transform.position.y)
+            {
+                return;
+            }
+        }
+        isClear = true;
+        InGameUIManager.Instance.CloseTaskUI(shakeParent.gameObject, 1.0f);
+    }
+
 }

@@ -41,7 +41,7 @@ public class FuelMission : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (fuelGage.fillAmount >= 1)
         {
             isClear = true;
-            Invoke("CloseUI", 1.0f);
+            InGameUIManager.Instance.CloseTaskUI(gameObject, 1.0f);
         }
 
     }
@@ -59,8 +59,4 @@ public class FuelMission : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         isPress = false;
     }
 
-    private void CloseUI()
-    {
-        gameObject.SetActive(false);
-    }
 }

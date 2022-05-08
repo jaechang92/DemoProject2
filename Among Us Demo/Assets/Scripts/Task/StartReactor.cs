@@ -114,7 +114,7 @@ public class StartReactor : MonoBehaviour
                 else
                 {
                     isClear = true;
-                    Invoke("CloseUI", 1.0f);
+                    InGameUIManager.Instance.CloseTaskUI(gameObject, 1.0f);
                 }
                 
             }
@@ -127,8 +127,4 @@ public class StartReactor : MonoBehaviour
         }
     }
 
-    private void CloseUI()
-    {
-        gameObject.SetActive(false);
-    }
 }

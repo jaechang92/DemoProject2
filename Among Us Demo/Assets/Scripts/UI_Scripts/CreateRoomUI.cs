@@ -15,7 +15,8 @@ public class CreateRoomUI : MonoBehaviour
     private List<Button> maxPlayerCountButtons;
 
     private CreateGameRoomData roomData;
-
+    [SerializeField]
+    private bool isTest;
     // Start is called before the first frame update
     void Start()
     {
@@ -132,6 +133,10 @@ public class CreateRoomUI : MonoBehaviour
     {
         var manager = NetworkManager.singleton as AmongUsRoomManager;
         manager.minPlayerCount = roomData.imposterCount == 1 ? 4 : roomData.imposterCount == 2 ? 7 : 9;
+        if (isTest)
+        {
+            manager.minPlayerCount = 1;
+        }
         manager.imposterCount = roomData.imposterCount;
         manager.maxConnections = roomData.maxPlayerCount;
 

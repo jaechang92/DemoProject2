@@ -96,7 +96,7 @@ public class EnergyConversionMission : MonoBehaviour
         {
             electricity_Divert_switchShadow.SetActive(true);
             isClear = true;
-            Invoke("CloseUI", 1.0f);
+            InGameUIManager.Instance.CloseTaskUI(gameObject, 1.0f);
         }
     }
 
@@ -183,9 +183,5 @@ public class EnergyConversionMission : MonoBehaviour
         }
     }
 
-    private void CloseUI()
-    {
-        gameObject.SetActive(false);
-    }
 
 }

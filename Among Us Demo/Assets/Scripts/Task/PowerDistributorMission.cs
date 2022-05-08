@@ -95,7 +95,7 @@ public class PowerDistributorMission : MonoBehaviour
                 if (nowIdx == calibratorGauges.Count)
                 {
                     isClear = true;
-                    Invoke("CloseUI", 1.0f);
+                    InGameUIManager.Instance.CloseTaskUI(gameObject, 1.0f);
                 }
             }
             else
@@ -105,11 +105,6 @@ public class PowerDistributorMission : MonoBehaviour
         }
     }
 
-
-    private void CloseUI()
-    {
-        gameObject.SetActive(false);
-    }
 
 
 }

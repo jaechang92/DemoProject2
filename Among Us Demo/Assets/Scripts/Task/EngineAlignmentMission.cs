@@ -81,7 +81,7 @@ public class EngineAlignmentMission : MonoBehaviour
         {
             engineAlign_slider.eulerAngles = Vector3.zero;
             isClear = true;
-            Invoke("CloseUI", 1.0f);
+            InGameUIManager.Instance.CloseTaskUI(gameObject, 1.0f);
         }
     }
 
@@ -137,9 +137,5 @@ public class EngineAlignmentMission : MonoBehaviour
         return Vector2.zero;
     }
 
-    private void CloseUI()
-    {
-        gameObject.SetActive(false);
-    }
 
 }

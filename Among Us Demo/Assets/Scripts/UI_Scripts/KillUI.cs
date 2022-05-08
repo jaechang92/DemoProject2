@@ -23,8 +23,7 @@ public class KillUI : MonoBehaviour
         gameObject.SetActive(true);
         imposterImage.material.SetColor("_PlayerColor", PlayerColor.GetColor(imposter));
         crewmateImage.material.SetColor("_PlayerColor", PlayerColor.GetColor(crewmate));
-
-        Invoke("Close", 3.0f);
+        StartCoroutine(InGameUIManager.Instance.CloseUI(gameObject, 3.0f));
 
     }
 

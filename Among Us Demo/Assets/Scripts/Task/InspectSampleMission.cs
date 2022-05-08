@@ -111,7 +111,7 @@ public class InspectSampleMission : MonoBehaviour
                 {
                     medBay_liquids[idx].color = liquidColor;
                     isClear = true;
-                    Invoke("CloseUI", 1.0f);
+                    InGameUIManager.Instance.CloseTaskUI(gameObject, 1.0f);
                 }
                 break;
             }
@@ -131,11 +131,6 @@ public class InspectSampleMission : MonoBehaviour
         //    isWaiting = true;
         //    checkTimeOrigin = DateTime.Now;
         //}
-    }
-
-    private void CloseUI()
-    {
-        gameObject.SetActive(false);
     }
 
 
