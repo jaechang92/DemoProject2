@@ -25,7 +25,10 @@ public class CharacterMover : NetworkBehaviour
             isMoveable = value;
         }
     }
-    public float moveSpeed = 2.0f;
+
+    public float moveSpeed;
+
+
     [SerializeField]
     private float characterSize = 0.7f;
     [SerializeField]
@@ -66,8 +69,9 @@ public class CharacterMover : NetworkBehaviour
         var inst = Instantiate(spriteRenderer.material);
         spriteRenderer.material = inst;
         spriteRenderer.material.SetColor("_PlayerColor", PlayerColor.GetColor(playerColor));
-
-
+        var manager = NetworkManager.singleton as AmongUsRoomManager;
+        manager.gameRuleData = FindObjectOfType<GameRuleStore>().GetGameRuleData();
+        moveSpeed = manager.gameRuleData.moveSpeed;
     }
 
     public virtual void Start()

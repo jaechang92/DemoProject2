@@ -93,6 +93,7 @@ public class InGameUIManager : MonoBehaviour
     public void CloseTaskUI(GameObject obj,float waitTime)
     {
         TaskManager.instance.clearCount++;
+        TaskManager.instance.TaskClear();
         InGameUIManager.Instance.UpdateTasksProgress();
         StartCoroutine(CloseUI(obj, waitTime));
     }
@@ -100,6 +101,7 @@ public class InGameUIManager : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
         obj.SetActive(false);
+        TaskManager.instance.TaskObject = null;
     }
     public void UpdateTasksProgress()
     {

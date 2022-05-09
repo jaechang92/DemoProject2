@@ -31,6 +31,7 @@ public class ResponsiveObject : MonoBehaviour
     public void OnClickUse()
     {
         InGameUIManager.Instance.TaskUI.SetActive(true);
+        TaskManager.instance.TaskObject = gameObject;
         activeObject.SetActive(true);
         var childObject = activeObject.GetComponentsInChildren<Transform>();
         foreach (var child in childObject)

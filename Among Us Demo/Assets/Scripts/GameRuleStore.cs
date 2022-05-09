@@ -181,6 +181,11 @@ public class GameRuleStore : NetworkBehaviour
         moveSpeed = Mathf.Clamp(moveSpeed + (isPlus ? 0.25f : -0.25f), 0.5f, 3f);
         isRecommendRule = false;
         isRecommendRuleToggle.isOn = false;
+        //var manager = NetworkManager.singleton as AmongUsRoomManager;
+        //foreach (var item in manager.roomSlots)
+        //{
+        //    item.GetComponent<AmongUsRoomPlayer>().myCharacter.moveSpeed = moveSpeed;
+        //}
     }
 
     [SyncVar(hook = nameof(SetCrewSightText_Hook))]
@@ -289,7 +294,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeCommonTask(bool isPlus)
     {
-        commonTask = Mathf.Clamp(commonTask + (isPlus ? 1 : -1), 0, 2);
+        commonTask = Mathf.Clamp(commonTask + (isPlus ? 1 : -1), 0, 5);
         isRecommendRule = false;
         isRecommendRuleToggle.isOn = false;
     }
@@ -305,7 +310,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeComplexTask(bool isPlus)
     {
-        complexTask = Mathf.Clamp(complexTask + (isPlus ? 1 : -1), 0, 3);
+        complexTask = Mathf.Clamp(complexTask + (isPlus ? 1 : -1), 0, 5);
         isRecommendRule = false;
         isRecommendRuleToggle.isOn = false;
     }
@@ -321,7 +326,7 @@ public class GameRuleStore : NetworkBehaviour
     }
     public void OnChangeSimpleTask(bool isPlus)
     {
-        simpleTask = Mathf.Clamp(simpleTask + (isPlus ? 1 : -1), 0, 5);
+        simpleTask = Mathf.Clamp(simpleTask + (isPlus ? 1 : -1), 0, 7);
         isRecommendRule = false;
         isRecommendRuleToggle.isOn = false;
     }

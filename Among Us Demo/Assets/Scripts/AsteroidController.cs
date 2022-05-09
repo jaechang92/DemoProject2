@@ -34,6 +34,9 @@ public class AsteroidController : MonoBehaviour
     {
         m_Image.SetNativeSize();
         m_collider.size = new Vector2(rt.rect.width, rt.rect.height);
+        m_collider.enabled = false;
+        speed = new Vector2(0, 0);
+        Destroy(gameObject, 1.0f);
     }
 
     void Start()

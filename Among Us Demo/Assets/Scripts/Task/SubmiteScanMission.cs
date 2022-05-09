@@ -57,6 +57,7 @@ public class SubmiteScanMission : MonoBehaviour
 
     private void Update()
     {
+        if (isClear) return;
         if (m_time >= 0)
         {
             m_time -= Time.deltaTime;

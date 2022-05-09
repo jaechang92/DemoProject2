@@ -17,6 +17,8 @@ public class TaskManager : NetworkBehaviour
     public int clearCount;
     public int taskCount;
 
+    public GameObject TaskObject;
+
     private void Awake()
     {
         if (instance == null)
@@ -63,8 +65,16 @@ public class TaskManager : NetworkBehaviour
                 responsiveObject[i].enabled = false;
             }
         }
-
-
     }
+
+    public void TaskClear()
+    {
+        var TaskObjectColliders = TaskObject.GetComponentsInChildren<Collider2D>();
+        foreach (var collider in TaskObjectColliders)
+        {
+            collider.enabled = false;
+        }
+    }
+
 
 }
