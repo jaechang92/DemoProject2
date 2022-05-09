@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using Mirror;
 using UnityEngine.SceneManagement;
+using System;
 
 public class LobbyUIManager : MonoBehaviour
 {
@@ -38,6 +40,7 @@ public class LobbyUIManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+
     }
 
     public void SetUesButton(Sprite sprite, UnityAction action)
@@ -75,8 +78,26 @@ public class LobbyUIManager : MonoBehaviour
             players[i].readyToBegin = true;
         }
 
-        manager.ServerChangeScene(manager.GameplayScene);
         manager.nowScene = manager.GameplayScene;
+        manager.ServerChangeScene(manager.GameplayScene);
 
     }
+
+    //public void PointerDown()
+    //{
+    //    if (EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable == true)
+    //    {
+    //        AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = false;
+    //    }
+        
+    //}
+    //public void PointerUp()
+    //{
+    //    if (EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable == true)
+    //    {
+    //        AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = true;
+    //    }
+    //}
+
+
 }

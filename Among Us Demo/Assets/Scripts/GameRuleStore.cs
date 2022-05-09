@@ -21,7 +21,6 @@ public enum ETaskBarUpdates
     Max
 }
 
-
 public struct GameRuleData
 {
     public bool confirmEjects;
@@ -181,11 +180,11 @@ public class GameRuleStore : NetworkBehaviour
         moveSpeed = Mathf.Clamp(moveSpeed + (isPlus ? 0.25f : -0.25f), 0.5f, 3f);
         isRecommendRule = false;
         isRecommendRuleToggle.isOn = false;
-        //var manager = NetworkManager.singleton as AmongUsRoomManager;
-        //foreach (var item in manager.roomSlots)
-        //{
-        //    item.GetComponent<AmongUsRoomPlayer>().myCharacter.moveSpeed = moveSpeed;
-        //}
+        var manager = NetworkManager.singleton as AmongUsRoomManager;
+        for (int i = 0; i < manager.roomSlots.Count; i++)
+        {
+            manager.roomSlots[i].GetComponent<AmongUsRoomPlayer>().myCharacter.moveSpeed = moveSpeed;
+        }
     }
 
     [SyncVar(hook = nameof(SetCrewSightText_Hook))]

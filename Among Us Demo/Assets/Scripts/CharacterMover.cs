@@ -6,6 +6,7 @@ using Mirror;
 
 public class CharacterMover : NetworkBehaviour
 {
+
     protected Animator animator;
     [SerializeField]
     private bool isMoveable;
@@ -25,7 +26,7 @@ public class CharacterMover : NetworkBehaviour
             isMoveable = value;
         }
     }
-
+    [SyncVar]
     public float moveSpeed;
 
 
@@ -70,7 +71,11 @@ public class CharacterMover : NetworkBehaviour
         spriteRenderer.material = inst;
         spriteRenderer.material.SetColor("_PlayerColor", PlayerColor.GetColor(playerColor));
         var manager = NetworkManager.singleton as AmongUsRoomManager;
-        manager.gameRuleData = FindObjectOfType<GameRuleStore>().GetGameRuleData();
+        
+        if (NetworkManager.networkSceneName != manager.GameplayScene)
+        {
+            manager.gameRuleData = FindObjectOfType<GameRuleStore>().GetGameRuleData();
+        }
         moveSpeed = manager.gameRuleData.moveSpeed;
     }
 
@@ -149,4 +154,6 @@ public class CharacterMover : NetworkBehaviour
         }
 
     }
+
+    
 }
