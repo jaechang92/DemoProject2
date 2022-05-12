@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SubmiteScanMission : MonoBehaviour
+public class SubmiteScanMission : ClearChecker
 {
     [SerializeField]
     private Text timerText;
@@ -15,8 +15,6 @@ public class SubmiteScanMission : MonoBehaviour
     private float m_time;
     private float originTime;
 
-    [SerializeField]
-    private bool isClear = false;
     [SerializeField]
     private string infoTextDetail;
     [SerializeField]

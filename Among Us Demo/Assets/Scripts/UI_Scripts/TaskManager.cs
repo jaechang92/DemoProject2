@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Mirror;
+
 
 public class TaskManager : NetworkBehaviour
 {
@@ -10,13 +12,16 @@ public class TaskManager : NetworkBehaviour
     [SerializeField]
     private List<ResponsiveObject> responsiveObject;
     [SerializeField]
-    private List<GameObject> taskUIList;
+    private List<ClearChecker> taskUIList;
     [SerializeField]
-    private List<int> taskIndexs;
+    public List<int> taskIndexs;
+    public Text tasksTextUI;
+
     [SyncVar]
     public int clearCount;
     public int taskCount;
 
+    [HideInInspector]
     public GameObject TaskObject;
 
     private void Awake()
@@ -65,16 +70,49 @@ public class TaskManager : NetworkBehaviour
                 responsiveObject[i].enabled = false;
             }
         }
+        UpdateTaskText();
     }
 
-    public void TaskClear()
+    public void TaskClear(GameObject obj)
     {
         var TaskObjectColliders = TaskObject.GetComponentsInChildren<Collider2D>();
         foreach (var collider in TaskObjectColliders)
         {
             collider.enabled = false;
         }
+        //for (int i = 0; i < taskIndexs.Count; i++)
+        //{
+        //    if (responsiveObject[taskIndexs[i]].gameObject == obj)
+        //    {
+        //        taskIndexs.Remove(i);
+        //    }
+        //}
+        UpdateTaskText();
     }
+
+    public string taskText = null;
+    private void UpdateTaskText()
+    {
+        taskText = null;
+        for (int i = 0; i < taskIndexs.Count; i++)
+        {
+            if (taskUIList[taskIndexs[i]].isClear == true)
+            {
+                taskText += "<b><color=green>" + responsiveObject[taskIndexs[i]].taskName + "</color></b>";
+            }
+            else
+            {
+                taskText += "<b><color=white>" + responsiveObject[taskIndexs[i]].taskName + "</color></b>";
+            }
+            if (i != taskIndexs.Count -1)
+            {
+                taskText += "\n";
+            }
+            
+        }
+        tasksTextUI.text = taskText;
+    }
+
 
 
 }

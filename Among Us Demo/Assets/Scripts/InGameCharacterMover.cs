@@ -93,6 +93,7 @@ public class InGameCharacterMover : CharacterMover
 
     private void Update()
     {
+        base.Update();
         if (isServer&& playerType == EPlayerType.Imposter)
         {
             killCooldown -= Time.deltaTime;

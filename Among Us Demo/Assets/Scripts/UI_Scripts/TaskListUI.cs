@@ -13,13 +13,13 @@ public class TaskListUI : MonoBehaviour, IPointerClickHandler
     private float offset;
     [SerializeField]
     private RectTransform taskListUITransform;
-
+    [SerializeField]
+    private Text taskText;
     private bool isOpen = false;
     private float timer;
 
-    private int commonTaskCount;
-    private int complexTaskCount;
-    private int simpleTaskCount;
+    [SerializeField]
+    private int commonTaskCount, complexTaskCount, simpleTaskCount;
     private void Start()
     {
         var roomManager = NetworkManager.singleton as AmongUsRoomManager;
@@ -27,6 +27,7 @@ public class TaskListUI : MonoBehaviour, IPointerClickHandler
         complexTaskCount = roomManager.gameRuleData.complexTask;
         simpleTaskCount = roomManager.gameRuleData.simpleTask;
     }
+
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -37,6 +38,11 @@ public class TaskListUI : MonoBehaviour, IPointerClickHandler
 
     private IEnumerator OpenAndHideUI()
     {
+        if (taskText.GetComponent<RectTransform>().sizeDelta.y != 0)
+        {
+            taskListUITransform.sizeDelta = new Vector2(taskListUITransform.sizeDelta.x, taskListUITransform.sizeDelta.y + taskText.GetComponent<RectTransform>().sizeDelta.y);
+        }
+        
         isOpen = !isOpen;
 
         if (timer != 0f)

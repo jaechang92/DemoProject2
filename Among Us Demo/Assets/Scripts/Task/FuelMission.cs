@@ -5,16 +5,13 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
-public class FuelMission : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class FuelMission : ClearChecker, IPointerDownHandler, IPointerUpHandler
 {
     [SerializeField]
     private Image fuelGage;
 
     [SerializeField]
     private float fuelGageTimer;
-
-    [SerializeField]
-    private bool isClear = false;
     [SerializeField]
     private bool isPress = false;
 

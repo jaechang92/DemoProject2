@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class PowerDistributorMission : MonoBehaviour
+public class PowerDistributorMission : ClearChecker
 {
     [SerializeField]
     private List<Transform> calibratorSpins;
@@ -25,8 +25,6 @@ public class PowerDistributorMission : MonoBehaviour
     private float vibrationTIme = 0.0625f;
     [SerializeField]
     private Vector3 minMaxRangePair;
-    [SerializeField]
-    private bool isClear = false;
     private void init()
     {
         //-140

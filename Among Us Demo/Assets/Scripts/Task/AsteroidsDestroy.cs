@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class AsteroidsDestroy : MonoBehaviour , IPointerDownHandler, IPointerUpHandler
+public class AsteroidsDestroy : ClearChecker , IPointerDownHandler, IPointerUpHandler
 {
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -39,8 +39,6 @@ public class AsteroidsDestroy : MonoBehaviour , IPointerDownHandler, IPointerUpH
 
     [SerializeField]
     private int destroyCount;
-    [SerializeField]
-    private bool isClear = false;
 
     float spawnTime;
     float currentTime = 0;

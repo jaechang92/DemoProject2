@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StartReactor : MonoBehaviour
+public class StartReactor : ClearChecker
 {
     [SerializeField]
     private Color colorCode;
@@ -26,8 +26,6 @@ public class StartReactor : MonoBehaviour
 
     [SerializeField]
     private int checkIdx = 0;
-    [SerializeField]
-    private bool isClear = false;
 
     [SerializeField]
     private float reTryTime;

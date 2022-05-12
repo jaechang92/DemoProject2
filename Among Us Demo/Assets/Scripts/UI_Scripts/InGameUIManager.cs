@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class InGameUIManager : MonoBehaviour
 {
@@ -93,7 +94,7 @@ public class InGameUIManager : MonoBehaviour
     public void CloseTaskUI(GameObject obj,float waitTime)
     {
         TaskManager.instance.clearCount++;
-        TaskManager.instance.TaskClear();
+        TaskManager.instance.TaskClear(obj);
         InGameUIManager.Instance.UpdateTasksProgress();
         StartCoroutine(CloseUI(obj, waitTime));
     }
@@ -107,4 +108,21 @@ public class InGameUIManager : MonoBehaviour
     {
         tasksProgress.fillAmount = (float)TaskManager.instance.clearCount / TaskManager.instance.taskCount;
     }
+
+    public void PointerDown()
+    {
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable == true)
+        {
+            AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = false;
+        }
+
+    }
+    public void PointerUp()
+    {
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable == true)
+        {
+            AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = true;
+        }
+    }
+
 }

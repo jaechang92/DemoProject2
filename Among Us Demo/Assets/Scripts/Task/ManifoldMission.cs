@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ManifoldMission : MonoBehaviour
+public class ManifoldMission : ClearChecker
 {
 
     [SerializeField]
@@ -12,8 +12,6 @@ public class ManifoldMission : MonoBehaviour
     [SerializeField]
     private List<Sprite> numberSpriteList;
 
-    [SerializeField]
-    private bool isClear = false;
 
     [SerializeField]
     private Color colorCode;

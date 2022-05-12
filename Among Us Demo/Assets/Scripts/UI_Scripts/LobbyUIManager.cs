@@ -83,21 +83,21 @@ public class LobbyUIManager : MonoBehaviour
 
     }
 
-    //public void PointerDown()
-    //{
-    //    if (EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable == true)
-    //    {
-    //        AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = false;
-    //    }
-        
-    //}
-    //public void PointerUp()
-    //{
-    //    if (EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable == true)
-    //    {
-    //        AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = true;
-    //    }
-    //}
+    public void PointerDown()
+    {
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable == true)
+        {
+            AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = false;
+        }
+
+    }
+    public void PointerUp()
+    {
+        if (EventSystem.current.currentSelectedGameObject != null && EventSystem.current.currentSelectedGameObject.GetComponent<Button>().interactable == true)
+        {
+            AmongUsRoomPlayer.MyRoomPlayer.myCharacter.IsMoveable = true;
+        }
+    }
 
 
 }

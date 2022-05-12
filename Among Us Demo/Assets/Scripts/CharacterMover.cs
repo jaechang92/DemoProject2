@@ -93,11 +93,10 @@ public class CharacterMover : NetworkBehaviour
 
     }
 
-    private void FixedUpdate()
+    public virtual void Update()
     {
         Move();
     }
-
     public void Move()
     {
         bool isMove = false;

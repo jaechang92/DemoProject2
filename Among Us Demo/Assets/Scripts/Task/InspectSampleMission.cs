@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class InspectSampleMission : MonoBehaviour
+public class InspectSampleMission : ClearChecker
 {
     [SerializeField]
     private Image[] sampleButtons;
@@ -25,8 +25,6 @@ public class InspectSampleMission : MonoBehaviour
     private bool isWaiting;
     
     
-    [SerializeField]
-    private bool isClear;
     [SerializeField]
     private DateTime checkTimeOrigin;
     [SerializeField]

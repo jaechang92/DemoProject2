@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class StabilizeSteeringMission : MonoBehaviour
+public class StabilizeSteeringMission : ClearChecker
 {
     [SerializeField]
     private float gizmoRadius;
@@ -11,8 +11,6 @@ public class StabilizeSteeringMission : MonoBehaviour
     private float clearRadius;
     [SerializeField]
     private Transform nav_stabilize_target;
-    [SerializeField]
-    private bool isClear = false;
     private bool trace = false;
 
     private void Start()

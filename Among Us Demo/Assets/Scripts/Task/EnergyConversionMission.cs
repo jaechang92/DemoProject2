@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnergyConversionMission : MonoBehaviour
+public class EnergyConversionMission : ClearChecker
 {
     
     //[SerializeField]
@@ -26,13 +26,11 @@ public class EnergyConversionMission : MonoBehaviour
     private float switchAmount;
     [SerializeField]
     private float switchAmountOther;
-    [SerializeField]
-    private bool isClear = false;
     private int missionIdx;
     private GameObject electricity_Divert_switchShadow;
     void Start()
     {
-        missionIdx = Random.Range(0, 9);
+        missionIdx = Random.Range(0, 8);
         electricity_Divert_switchShadow = switchs[missionIdx].GetChild(0).gameObject;
         electricity_Divert_switchShadow.SetActive(false);
 

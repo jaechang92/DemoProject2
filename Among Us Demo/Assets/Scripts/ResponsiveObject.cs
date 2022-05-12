@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ResponsiveObject : MonoBehaviour
+public class ResponsiveObject : TaskData
 {
     // 해당 객체에 할당하고 각각 퀘스트와 연결
 

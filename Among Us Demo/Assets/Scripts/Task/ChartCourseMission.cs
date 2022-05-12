@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class ChartCourseMission : MonoBehaviour
+public class ChartCourseMission : ClearChecker
 {
     [SerializeField]
     private List<GameObject> checkPoints;
@@ -14,8 +14,6 @@ public class ChartCourseMission : MonoBehaviour
     private int nowIdx;
     [SerializeField]
     private float range;
-    [SerializeField]
-    private bool isClear = false;
     [SerializeField]
     private List<List<Transform>> llt = new List<List<Transform>>();
     [SerializeField]

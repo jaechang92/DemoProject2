@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ShieldMission : MonoBehaviour
+public class ShieldMission : ClearChecker
 {
     [SerializeField]
     private List<Image> shield_Panels;
@@ -15,8 +15,7 @@ public class ShieldMission : MonoBehaviour
     private List<int> missionIdx = new List<int>();
     [SerializeField]
     private List<Animator> lamps;
-
-    private bool isClear = false;    
+ 
     void Start()
     {
         while (missionCnt > 0)

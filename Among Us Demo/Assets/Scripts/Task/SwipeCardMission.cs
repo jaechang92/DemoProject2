@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwipeCardMission : MonoBehaviour
+public class SwipeCardMission : ClearChecker
 {
     [SerializeField]
     private Vector2 cardStartPoint;
@@ -17,8 +17,6 @@ public class SwipeCardMission : MonoBehaviour
     [SerializeField]
     private float currentTime = 0;
     private bool isChecked = false;
-    [SerializeField]
-    private bool isClear = false;
     private void OnEnable()
     {
         card.anchoredPosition = new Vector2(cardStartPoint.x, cardStartPoint.y);

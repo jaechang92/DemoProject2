@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Garbage_leverController : MonoBehaviour
+public class Garbage_leverController : ClearChecker
 {
     [SerializeField]
     private RectTransform garbage_leverBars;
@@ -23,8 +23,6 @@ public class Garbage_leverController : MonoBehaviour
     private float forceValue;
     [SerializeField]
     private CameraShake shakeParent;
-    [SerializeField]
-    private bool isClear = false;
     void Start()
     {
 

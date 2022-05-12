@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using Mirror;
 
 
-public class WireTaskControl : MonoBehaviour, IPointerDownHandler , IPointerUpHandler
+public class WireTaskControl : ClearChecker, IPointerDownHandler , IPointerUpHandler
 {
     [SerializeField]
     private List<GameObject> leftWireList;
@@ -16,8 +16,6 @@ public class WireTaskControl : MonoBehaviour, IPointerDownHandler , IPointerUpHa
 
     [SerializeField]
     private float offset = 15f;
-    [SerializeField]
-    private bool isClear = false;
     private LeftWire nowLeftWire;
     private int connectCount;
     public void OnPointerDown(PointerEventData eventData)

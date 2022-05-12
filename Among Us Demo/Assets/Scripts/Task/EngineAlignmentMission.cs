@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EngineAlignmentMission : MonoBehaviour
+public class EngineAlignmentMission : ClearChecker
 {
     [SerializeField]
     private RectTransform engineAlign_engine;
@@ -23,8 +23,6 @@ public class EngineAlignmentMission : MonoBehaviour
     private Color idleColor;
     [SerializeField]
     private Color nearColor;
-    [SerializeField]
-    private bool isClear = false;
     void Start()
     {
 
