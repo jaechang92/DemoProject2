@@ -37,12 +37,7 @@ public class TaskListUI : MonoBehaviour, IPointerClickHandler
 
 
     private IEnumerator OpenAndHideUI()
-    {
-        if (taskText.GetComponent<RectTransform>().sizeDelta.y != 0)
-        {
-            taskListUITransform.sizeDelta = new Vector2(taskListUITransform.sizeDelta.x, taskListUITransform.sizeDelta.y + taskText.GetComponent<RectTransform>().sizeDelta.y);
-        }
-        
+    {   
         isOpen = !isOpen;
 
         if (timer != 0f)
