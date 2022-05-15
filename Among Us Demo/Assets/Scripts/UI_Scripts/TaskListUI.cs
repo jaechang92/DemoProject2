@@ -23,6 +23,10 @@ public class TaskListUI : MonoBehaviour, IPointerClickHandler
     private void Start()
     {
         var roomManager = NetworkManager.singleton as AmongUsRoomManager;
+        if (roomManager == null)
+        {
+            return;
+        }
         commonTaskCount = roomManager.gameRuleData.commonTask;
         complexTaskCount = roomManager.gameRuleData.complexTask;
         simpleTaskCount = roomManager.gameRuleData.simpleTask;

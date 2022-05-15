@@ -52,6 +52,11 @@ public class StartReactor : ClearChecker
             screenButtonImage[i].SetActive(false);
         }
 
+
+    }
+
+    private void OnEnable()
+    {
         StartCoroutine(Co_StartReactor());
 
     }

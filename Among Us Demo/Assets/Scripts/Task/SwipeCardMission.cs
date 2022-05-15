@@ -26,14 +26,19 @@ public class SwipeCardMission : ClearChecker
 
     private void Update()
     {
-        SetCardPosition();
-        if (Input.GetMouseButton(0) && isChecked)
+
+        if (Input.GetMouseButton(0) && isChecked && !isClear)
         {
             currentTime += Time.deltaTime;
             
             card.transform.position = new Vector3(Input.mousePosition.x, card.transform.position.y, card.transform.position.z);
-
         }
+
+        if (!Input.GetMouseButton(0))
+        {
+            SetCardPosition();
+        }
+
     }
 
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7015041865776657089}
   - component: {fileID: 7015041865776657088}
   m_Layer: 5
-  m_Name: line
+  m_Name: lineShadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 2100000, guid: 94b758d878e7bc84eb224a20d09376df, type: 2}
+  m_Material: {fileID: 2100000, guid: 8437e662eb01fae4a926c6f6084fdb64, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
