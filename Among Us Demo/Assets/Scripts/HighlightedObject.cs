@@ -29,7 +29,11 @@ public class HighlightedObject : MonoBehaviour
             spriteRenderer.material.SetFloat("_Highlighted", 1);
             if (manager.nowScene == manager.RoomScene)
             {
-                LobbyUIManager.Instance.SetUesButton(useButtonSprite, OnClickUse);
+                LobbyUIManager.Instance.SetUesButton(useButtonSprite, OnClickUseButton_InLobby);
+            }
+            if (manager.nowScene == manager.GameplayScene)
+            {
+                InGameUIManager.Instance.SetUesButton(useButtonSprite);
             }
         }
     }
@@ -47,9 +51,10 @@ public class HighlightedObject : MonoBehaviour
         }
     }
 
-    public void OnClickUse()
+    public void OnClickUseButton_InLobby()
     {
         LobbyUIManager.Instance.CustomizeUI.Open();
     }
+
 
 }

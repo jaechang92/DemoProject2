@@ -14,7 +14,7 @@ public class ResponsiveObject : TaskData
         var character = collision.GetComponent<CharacterMover>();
         if (character != null && character.hasAuthority)
         {
-            InGameUIManager.Instance.SetUesButton(OnClickUse);
+            InGameUIManager.Instance.SetUesButton(null, OnClickUse);
             
         }
     }

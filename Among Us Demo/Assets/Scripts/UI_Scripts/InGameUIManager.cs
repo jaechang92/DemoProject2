@@ -68,16 +68,39 @@ public class InGameUIManager : MonoBehaviour
     public Image TasksProgress { get { return tasksProgress; } }
 
 
+
+    [SerializeField]
+    private Sprite originUseButtonSprite;
+
+    public void SetUesButton(Sprite sprite)
+    {
+        originUseButtonSprite = useButtonUI.useButton.image.sprite;
+        if (sprite != null)
+        {
+            useButtonUI.useButton.image.sprite = sprite;
+        }
+        useButtonUI.useButton.interactable = true;
+    }
     public void SetUesButton(UnityAction action)
     {
-        //useButtonUI.image.sprite = sprite;
+        useButtonUI.useButton.onClick.RemoveAllListeners();
+        useButtonUI.useButton.onClick.AddListener(action);
+    }
+    public void SetUesButton(Sprite sprite, UnityAction action)
+    {
+        useButtonUI.useButton.onClick.RemoveAllListeners();
+        originUseButtonSprite = useButtonUI.useButton.image.sprite;
+        if (sprite != null)
+        {
+            useButtonUI.useButton.image.sprite = sprite;
+        }
         useButtonUI.useButton.onClick.AddListener(action);
         useButtonUI.useButton.interactable = true;
     }
 
     public void UnSetUesButton()
     {
-        //useButtonUI.image.sprite = sprite;
+        useButtonUI.useButton.image.sprite = originUseButtonSprite;
         useButtonUI.useButton.onClick.RemoveAllListeners();
         useButtonUI.useButton.interactable = false;
     }

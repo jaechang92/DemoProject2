@@ -202,6 +202,7 @@ public class InGameCharacterMover : CharacterMover
         GameSystem.Instance.StartReportMeeting(deadbodyColor);
     }
 
+    [ClientRpc]
     public void SetVisibility(bool isVisible)
     {
         if (isVisible)
