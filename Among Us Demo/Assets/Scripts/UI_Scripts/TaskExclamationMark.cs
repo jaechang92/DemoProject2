@@ -4,29 +4,49 @@ using UnityEngine;
 
 public class TaskExclamationMark : MonoBehaviour
 {
-    
-
     [SerializeField]
     private GameObject exclamationMark;
 
     [SerializeField]
-    private List<GameObject> objectPool;
+    public List<GameObject> deactivateObjectPool;
+    [SerializeField]
+    public List<GameObject> activeObjectPool;
 
 
 
     void Start()
     {
-        for (int i = 0; i < TaskManager.instance.taskCount; i++)
-        {
-            var obj = Instantiate(exclamationMark);
-            objectPool.Add(obj);
-        }
         
     }
 
-    // Update is called once per frame
-    void Update()
+    public GameObject PopObject()
     {
-        
+        if (deactivateObjectPool.Count == 0)
+        {
+            CreateObjectInPool();
+        }
+        GameObject obj = deactivateObjectPool[0];
+        activeObjectPool.Add(obj);
+        deactivateObjectPool.RemoveAt(0);
+        return obj;
+    }
+
+    public void PushObject()
+    {
+        foreach (var item in activeObjectPool)
+        {
+            deactivateObjectPool.Add(item);
+        }
+        activeObjectPool.Clear();
+    }
+
+    public void CreateObjectInPool()
+    {
+        var obj = Instantiate(exclamationMark, transform);
+        deactivateObjectPool.Add(obj);
+    }
+    public void DestoryObjectInPool()
+    {
+
     }
 }

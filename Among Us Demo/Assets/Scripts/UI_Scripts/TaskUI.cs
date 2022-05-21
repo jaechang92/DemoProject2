@@ -13,6 +13,7 @@ public class TaskUI : MonoBehaviour
         {
             taskList[i].SetActive(false);
         }
+        Close();
     }
 
     public void Close()

@@ -10,7 +10,7 @@ public class TaskManager : NetworkBehaviour
     public static TaskManager instance;
     public int taskID;
     [SerializeField]
-    private List<ResponsiveObject> responsiveObject;
+    public List<ResponsiveObject> responsiveObject;
     [SerializeField]
     private List<ClearChecker> taskUIList;
     [SerializeField]
@@ -80,13 +80,15 @@ public class TaskManager : NetworkBehaviour
         {
             collider.enabled = false;
         }
-        //for (int i = 0; i < taskIndexs.Count; i++)
-        //{
-        //    if (responsiveObject[taskIndexs[i]].gameObject == obj)
-        //    {
-        //        taskIndexs.Remove(i);
-        //    }
-        //}
+
+        for (int i = 0; i < taskIndexs.Count; i++)
+        {
+            if (responsiveObject[taskIndexs[i]].gameObject == obj)
+            {
+                taskIndexs.Remove(i);
+                break;
+            }
+        }
         UpdateTaskText();
     }
 
