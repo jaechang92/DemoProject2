@@ -26,6 +26,7 @@ public class InGameCharacterMover : CharacterMover
         if (hasAuthority && type == EPlayerType.Imposter)
         {
             InGameUIManager.Instance.KillButtonUI.Show(this);
+            InGameUIManager.Instance.SabotageButtonUI.SetActive(true);
             playerFinder.SetKillRange(GameSystem.Instance.killRange + 1f);
         }
     }
@@ -41,6 +42,8 @@ public class InGameCharacterMover : CharacterMover
 
     [SyncVar]
     public bool isReporter = false;
+    [SyncVar]
+    public bool isSabotage = false;
 
     [SyncVar]
     public bool isVote;
@@ -194,12 +197,23 @@ public class InGameCharacterMover : CharacterMover
         CmdReport(foundDeadbodyColor);
     }
 
-
     [Command]
     public void CmdReport(EPlayerColor deadbodyColor)
     {
         isReporter = true;
         GameSystem.Instance.StartReportMeeting(deadbodyColor);
+    }
+
+    public void Sabotage(E_Sabotage sabotage)
+    {
+        CmdSabotage(sabotage);
+    }
+
+    [Command]
+    public void CmdSabotage(E_Sabotage sabotage)
+    {
+        isSabotage = true;
+        GameSystem.Instance.StartSabotage(sabotage);
     }
 
     [ClientRpc]

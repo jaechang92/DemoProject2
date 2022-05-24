@@ -20,6 +20,8 @@ public class MinimapUI : MonoBehaviour
     private TaskExclamationMark taskExclamationMarkScript;
     [SerializeField]
     private Image minimapPlayerImage;
+    [SerializeField]
+    private GameObject sabotage;
 
     private CharacterMover targetPlayer;
 
@@ -75,10 +77,19 @@ public class MinimapUI : MonoBehaviour
         }
     }
 
+    public void OpenSabotage()
+    {
+        Open();
+        sabotage.SetActive(true);
+    }
+
     public void Close()
     {
         taskExclamationMarkScript.PushObject();
+        sabotage.SetActive(false);
         gameObject.SetActive(false);
     }
+
+
 
 }

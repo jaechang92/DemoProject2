@@ -24,6 +24,13 @@ public class InGameUIManager : MonoBehaviour
     }
 
     [SerializeField]
+    private GameObject sabotageButtonUI;
+    public GameObject SabotageButtonUI
+    {
+        get { return sabotageButtonUI; }
+    }
+
+    [SerializeField]
     private UseButtonUI useButtonUI;
     public UseButtonUI UseButtonUI
     {
@@ -72,6 +79,9 @@ public class InGameUIManager : MonoBehaviour
     [SerializeField]
     private Sprite originUseButtonSprite;
 
+    [SerializeField]
+    private Image sabotageRedBG;
+    public Image SabotageRedBG { get { return sabotageRedBG; } }
     public void SetUesButton(Sprite sprite)
     {
         originUseButtonSprite = useButtonUI.useButton.image.sprite;
@@ -130,6 +140,15 @@ public class InGameUIManager : MonoBehaviour
     public void UpdateTasksProgress()
     {
         tasksProgress.fillAmount = (float)TaskManager.instance.clearCount / TaskManager.instance.taskCount;
+    }
+
+    public void ClickSabotage()
+    {
+        var character = AmongUsRoomPlayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
+        E_Sabotage sabo = EventSystem.current.currentSelectedGameObject.GetComponent<SabotageUI>().sabotage;
+        character.Sabotage(sabo);
+
+
     }
 
     public void PointerDown()

@@ -166,6 +166,11 @@ public class GameSystem : NetworkBehaviour
             globalLight.intensity = 0.5f;
         }
     }
+    public void StartSabotage(E_Sabotage sabotage)
+    {
+        RpcSendSabotage(sabotage);
+        //StartCoroutine(StartSabotage_Coroutine(sabotage));
+    }
 
     public void StartReportMeeting(EPlayerColor deadbodyColor)
     {
@@ -179,6 +184,57 @@ public class GameSystem : NetworkBehaviour
         InGameUIManager.Instance.ReportUI.Close();
         InGameUIManager.Instance.MeetingUI.Open();
         InGameUIManager.Instance.MeetingUI.ChangeMeetingState(EMeetingState.Meeting);
+    }
+
+    private IEnumerator SabotageRedBG_Coroutine()
+    {
+        while (true)
+        {
+            if (InGameUIManager.Instance.SabotageRedBG.color.a == 0.15f)
+            {
+                InGameUIManager.Instance.SabotageRedBG.color = new Color(1, 0, 0, 0);
+            }
+            else
+            {
+                InGameUIManager.Instance.SabotageRedBG.color = new Color(1, 0, 0, 0.15f);
+            }
+            yield return new WaitForSeconds(1.0f);
+        }
+    }
+    private IEnumerator StartSabotage_Coroutine(E_Sabotage sabotage)
+    {
+        switch (sabotage)
+        {
+            case E_Sabotage.sabotage_reactor:
+                // 경고음 + 원자로 융해 사보타지
+                // 타이머 온
+                Debug.Log("원자로 사보타지");
+                InGameUIManager.Instance.SabotageRedBG.gameObject.SetActive(true);
+                StartCoroutine(SabotageRedBG_Coroutine());
+                break;
+            case E_Sabotage.sabotage_O2:
+                // 경고음 + 산소 사보타지
+                // 타이머 온
+                Debug.Log("산소 사보타지");
+
+                break;
+            case E_Sabotage.sabotage_electricity:
+                // 일정 시간에 걸쳐 시야 감소
+                Debug.Log("전기실 사보타지");
+
+                break;
+            case E_Sabotage.sabotage_comms:
+                // 미정
+
+                break;
+            case E_Sabotage.sabotage_Doors:
+                // 미정
+
+                break;
+            default:
+                break;
+        }
+        yield return null;
     }
 
     private IEnumerator MeetingProcess_Coroutine()
@@ -337,6 +393,11 @@ public class GameSystem : NetworkBehaviour
 
         StartCoroutine(StartMeeting_Coroutine());
 
+    }
+    [ClientRpc]
+    public void RpcSendSabotage(E_Sabotage sabotage)
+    {
+        StartCoroutine(StartSabotage_Coroutine(sabotage));
     }
 
     [ClientRpc]
