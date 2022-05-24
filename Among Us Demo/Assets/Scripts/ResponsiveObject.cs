@@ -15,7 +15,6 @@ public class ResponsiveObject : TaskData
         if (character != null && character.hasAuthority)
         {
             InGameUIManager.Instance.SetUesButton(null, OnClickUse);
-            
         }
     }
 
