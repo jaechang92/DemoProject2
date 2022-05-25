@@ -30,6 +30,9 @@ public class GameSystem : NetworkBehaviour
     [SyncVar]
     public float remainTime;
 
+    [SyncVar]
+    public int sabotageCheckCount = 0;
+
 
 
     [SerializeField]
@@ -201,6 +204,12 @@ public class GameSystem : NetworkBehaviour
             yield return new WaitForSeconds(1.0f);
         }
     }
+    private void InitSabo()
+    {
+        InGameUIManager.Instance.SabotageRedBG.gameObject.SetActive(true);
+        sabotageCheckCount = 0;
+    }
+    Coroutine coroutine;
     private IEnumerator StartSabotage_Coroutine(E_Sabotage sabotage)
     {
         switch (sabotage)
@@ -209,14 +218,15 @@ public class GameSystem : NetworkBehaviour
                 // 경고음 + 원자로 융해 사보타지
                 // 타이머 온
                 Debug.Log("원자로 사보타지");
-                InGameUIManager.Instance.SabotageRedBG.gameObject.SetActive(true);
-                StartCoroutine(SabotageRedBG_Coroutine());
+                InitSabo();
+                coroutine = StartCoroutine(SabotageRedBG_Coroutine());
                 break;
             case E_Sabotage.sabotage_O2:
                 // 경고음 + 산소 사보타지
                 // 타이머 온
                 Debug.Log("산소 사보타지");
-
+                InitSabo();
+                coroutine = StartCoroutine(SabotageRedBG_Coroutine());
                 break;
             case E_Sabotage.sabotage_electricity:
                 // 일정 시간에 걸쳐 시야 감소
@@ -412,4 +422,20 @@ public class GameSystem : NetworkBehaviour
         InGameUIManager.Instance.MeetingUI.UpdateSkipVotePlayer(skipVotePlayerColor);
     }
 
+    [Command]
+    public void CmdSabotageCheckFunc()
+    {
+        RpcSabotageCheckFunc();
+    }
+
+    [ClientRpc]
+    public void RpcSabotageCheckFunc()
+    {
+        if (sabotageCheckCount >= 2)
+        {
+            StopCoroutine(coroutine);
+            InGameUIManager.Instance.SabotageRedBG.gameObject.SetActive(false);
+            sabotageCheckCount = 0;
+        }
+    }
 }

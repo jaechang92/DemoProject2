@@ -133,6 +133,7 @@ public class InGameUIManager : MonoBehaviour
     }
     public IEnumerator CloseUI(GameObject obj, float waitTime)
     {
+        TaskManager.instance.TaskObjectCollidersOff();
         yield return new WaitForSeconds(waitTime);
         obj.SetActive(false);
         TaskManager.instance.TaskObject = null;
@@ -145,7 +146,13 @@ public class InGameUIManager : MonoBehaviour
     public void ClickSabotage()
     {
         var character = AmongUsRoomPlayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
-        E_Sabotage sabo = EventSystem.current.currentSelectedGameObject.GetComponent<SabotageUI>().sabotage;
+        SabotageUI saboUI = EventSystem.current.currentSelectedGameObject.GetComponent<SabotageUI>();
+        E_Sabotage sabo = saboUI.sabotage;
+        for (int i = 0; i < saboUI.sabotageObjects.Count; i++)
+        {
+            TaskManager.instance.TaskObjectCollidersOn(saboUI.sabotageObjects[i]);
+        }
+
         character.Sabotage(sabo);
 
 

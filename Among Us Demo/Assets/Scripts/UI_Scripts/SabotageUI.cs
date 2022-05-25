@@ -12,4 +12,5 @@ public enum E_Sabotage
 public class SabotageUI : MonoBehaviour
 {
     public E_Sabotage sabotage;
+    public List<Transform> sabotageObjects; 
 }

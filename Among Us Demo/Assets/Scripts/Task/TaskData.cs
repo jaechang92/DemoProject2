@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 public class TaskData : MonoBehaviour
 {
@@ -10,5 +11,6 @@ public class TaskData : MonoBehaviour
     public string taskName;
     [SerializeField]
     public bool isTask;
+
 
 }

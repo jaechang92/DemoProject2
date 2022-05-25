@@ -75,12 +75,6 @@ public class TaskManager : NetworkBehaviour
 
     public void TaskClear(GameObject obj)
     {
-        var TaskObjectColliders = TaskObject.GetComponentsInChildren<Collider2D>();
-        foreach (var collider in TaskObjectColliders)
-        {
-            collider.enabled = false;
-        }
-
         for (int i = 0; i < taskIndexs.Count; i++)
         {
             if (responsiveObject[taskIndexs[i]].gameObject == obj)
@@ -91,6 +85,24 @@ public class TaskManager : NetworkBehaviour
         }
         UpdateTaskText();
     }
+    public void TaskObjectCollidersOff()
+    {
+        var TaskObjectColliders = TaskObject.GetComponentsInChildren<Collider2D>();
+        foreach (var collider in TaskObjectColliders)
+        {
+            collider.enabled = false;
+        }
+    }
+
+    public void TaskObjectCollidersOn(Transform obj)
+    {
+        var TaskObjectColliders = obj.GetComponentsInChildren<Collider2D>();
+        foreach (var collider in TaskObjectColliders)
+        {
+            collider.enabled = true;
+        }
+    }
+
 
     public string taskText = null;
     private void UpdateTaskText()
