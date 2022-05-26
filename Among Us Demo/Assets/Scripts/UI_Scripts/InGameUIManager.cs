@@ -8,6 +8,18 @@ using UnityEngine.EventSystems;
 public class InGameUIManager : MonoBehaviour
 {
     public static InGameUIManager Instance;
+    public Text debugText;
+
+    public string MyDebuger(Object bValue)
+    {
+        return bValue.GetType().Name + bValue == null ? "= null" : "!= null" + "\n";
+    }
+    public string MyDebuger(string str)
+    {
+        return str + "\n";
+    }
+
+
 
     [SerializeField]
     private InGameIntroUI inGameIntroUI;
@@ -87,7 +99,10 @@ public class InGameUIManager : MonoBehaviour
         originUseButtonSprite = useButtonUI.useButton.image.sprite;
         if (sprite != null)
         {
+            InGameUIManager.Instance.debugText.text = "";
+            InGameUIManager.Instance.debugText.text += InGameUIManager.Instance.MyDebuger(useButtonUI.useButton.image.sprite.name);
             useButtonUI.useButton.image.sprite = sprite;
+            InGameUIManager.Instance.debugText.text += InGameUIManager.Instance.MyDebuger(useButtonUI.useButton.image.sprite.name);
         }
         useButtonUI.useButton.interactable = true;
     }

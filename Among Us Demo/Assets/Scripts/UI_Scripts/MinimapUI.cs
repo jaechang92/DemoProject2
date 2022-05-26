@@ -64,6 +64,7 @@ public class MinimapUI : MonoBehaviour
     public void Open()
     {
         gameObject.SetActive(true);
+        sabotage.SetActive(false);
         if (TaskManager.instance.taskIndexs.Count > 0)
         {
             for (int i = 0; i < TaskManager.instance.taskIndexs.Count; i++)
@@ -79,7 +80,8 @@ public class MinimapUI : MonoBehaviour
 
     public void OpenSabotage()
     {
-        Open();
+        gameObject.SetActive(true);
+        taskExclamationMarkScript.PushObject();
         sabotage.SetActive(true);
     }
 

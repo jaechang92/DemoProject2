@@ -57,6 +57,8 @@ public class MeetingPlayerPanelUI : MonoBehaviour
         {
             nicknameText.color = Color.red;
         }
+        //임포스터가 아닐경우 밴트 콜라이더 OFF
+
 
         bool isDead = (targetPlayer.playerType & EPlayerType.Ghost) == EPlayerType.Ghost;
         deadPlayerBlock.SetActive(isDead);

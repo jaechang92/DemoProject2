@@ -26,6 +26,7 @@ public class TaskExclamationMark : MonoBehaviour
             CreateObjectInPool();
         }
         GameObject obj = deactivateObjectPool[0];
+        obj.SetActive(true);
         activeObjectPool.Add(obj);
         deactivateObjectPool.RemoveAt(0);
         return obj;
@@ -36,6 +37,7 @@ public class TaskExclamationMark : MonoBehaviour
         foreach (var item in activeObjectPool)
         {
             deactivateObjectPool.Add(item);
+            item.SetActive(false);
         }
         activeObjectPool.Clear();
     }

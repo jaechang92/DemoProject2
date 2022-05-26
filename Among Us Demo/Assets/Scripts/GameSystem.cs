@@ -209,7 +209,7 @@ public class GameSystem : NetworkBehaviour
         InGameUIManager.Instance.SabotageRedBG.gameObject.SetActive(true);
         sabotageCheckCount = 0;
     }
-    Coroutine coroutine;
+
     private IEnumerator StartSabotage_Coroutine(E_Sabotage sabotage)
     {
         switch (sabotage)
@@ -219,14 +219,14 @@ public class GameSystem : NetworkBehaviour
                 // 타이머 온
                 Debug.Log("원자로 사보타지");
                 InitSabo();
-                coroutine = StartCoroutine(SabotageRedBG_Coroutine());
+                StartCoroutine(SabotageRedBG_Coroutine());
                 break;
             case E_Sabotage.sabotage_O2:
                 // 경고음 + 산소 사보타지
                 // 타이머 온
                 Debug.Log("산소 사보타지");
                 InitSabo();
-                coroutine = StartCoroutine(SabotageRedBG_Coroutine());
+                 StartCoroutine(SabotageRedBG_Coroutine());
                 break;
             case E_Sabotage.sabotage_electricity:
                 // 일정 시간에 걸쳐 시야 감소
@@ -422,18 +422,13 @@ public class GameSystem : NetworkBehaviour
         InGameUIManager.Instance.MeetingUI.UpdateSkipVotePlayer(skipVotePlayerColor);
     }
 
-    [Command]
-    public void CmdSabotageCheckFunc()
-    {
-        RpcSabotageCheckFunc();
-    }
 
     [ClientRpc]
-    public void RpcSabotageCheckFunc()
+    public void RpcSabotageCheckFunc(int count)
     {
-        if (sabotageCheckCount >= 2)
+        if (count >= 2)
         {
-            StopCoroutine(coroutine);
+            StopAllCoroutines();
             InGameUIManager.Instance.SabotageRedBG.gameObject.SetActive(false);
             sabotageCheckCount = 0;
         }

@@ -37,6 +37,7 @@ public class VentUI : MonoBehaviour
 
     public void SetVentUseButton()
     {
+        
         VentSystem.Instance.SetVent((int)ventCategory, gameObject);
     }
 

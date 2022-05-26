@@ -37,7 +37,8 @@ public class SabotageMeltReactorMission : MonoBehaviour
         isTouch = true;
         moveWhiteLine.enabled = true;
         GameSystem.Instance.sabotageCheckCount++;
-        GameSystem.Instance.CmdSabotageCheckFunc();
+        var myCharacter = AmongUsRoomPlayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
+        myCharacter.CmdSabotageCheckFunc(GameSystem.Instance.sabotageCheckCount);
         isClear = true;
     }
 

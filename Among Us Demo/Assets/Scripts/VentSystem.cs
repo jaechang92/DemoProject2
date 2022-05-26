@@ -35,9 +35,30 @@ public class VentSystem : MonoBehaviour
 
     }
 
+    private void VentColliderOff(List<Transform> list)
+    {
+        foreach (var item in list)
+        {
+            var colliders = item.GetComponentsInChildren<Collider2D>();
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                colliders[i].enabled = false;
+            }
+        }
+    }
+    public void VentOffAll()
+    {
+        VentColliderOff(ventCafeteriaAdminHallway);
+        VentColliderOff(ventMedbayElectricalSecurity);
+        VentColliderOff(ventReactorUpperEngine);
+        VentColliderOff(ventReactorLowerEngine);
+        VentColliderOff(ventNavigationWeapons);
+        VentColliderOff(ventNavigationShields);
+    }
+
     void Start()
     {
-        
+
     }
 
     void Update()

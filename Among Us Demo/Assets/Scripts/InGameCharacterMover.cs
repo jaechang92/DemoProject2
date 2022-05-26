@@ -29,6 +29,11 @@ public class InGameCharacterMover : CharacterMover
             InGameUIManager.Instance.SabotageButtonUI.SetActive(true);
             playerFinder.SetKillRange(GameSystem.Instance.killRange + 1f);
         }
+        else
+        {
+            var my_ventsystem = FindObjectOfType<VentSystem>();
+            my_ventsystem.VentOffAll();
+        }
     }
 
     [SerializeField]
@@ -89,7 +94,11 @@ public class InGameCharacterMover : CharacterMover
             var myRoomPlayer = AmongUsRoomPlayer.MyRoomPlayer;
             myRoomPlayer.myCharacter = this;
             CmdSetPlayerCharacter(myRoomPlayer.nickname, myRoomPlayer.playerColor);
+
+            
         }
+
+        
 
         GameSystem.Instance.AddPlayer(this);
     }
@@ -214,6 +223,12 @@ public class InGameCharacterMover : CharacterMover
     {
         isSabotage = true;
         GameSystem.Instance.StartSabotage(sabotage);
+    }
+
+    [Command]
+    public void CmdSabotageCheckFunc(int count)
+    {
+        GameSystem.Instance.RpcSabotageCheckFunc(count);
     }
 
     [ClientRpc]

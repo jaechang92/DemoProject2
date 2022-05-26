@@ -26,9 +26,12 @@ public class CharacterMover : NetworkBehaviour
             isMoveable = value;
         }
     }
-    [SyncVar]
+    [SyncVar(hook = nameof(SetPlayerMoveSpeed_Hook))]
     public float moveSpeed;
-
+    public void SetPlayerMoveSpeed_Hook(float _, float value)
+    {
+        moveSpeed = value;
+    }
 
     [SerializeField]
     private float characterSize = 0.7f;
@@ -76,7 +79,6 @@ public class CharacterMover : NetworkBehaviour
         {
             manager.gameRuleData = FindObjectOfType<GameRuleStore>().GetGameRuleData();
         }
-        moveSpeed = manager.gameRuleData.moveSpeed;
     }
 
     public virtual void Start()

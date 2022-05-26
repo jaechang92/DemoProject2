@@ -35,6 +35,7 @@ public class HighlightedObject : MonoBehaviour
             {
                 InGameUIManager.Instance.SetUesButton(useButtonSprite);
             }
+
         }
     }
 
