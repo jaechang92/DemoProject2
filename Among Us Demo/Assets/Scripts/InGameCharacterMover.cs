@@ -28,11 +28,8 @@ public class InGameCharacterMover : CharacterMover
             InGameUIManager.Instance.KillButtonUI.Show(this);
             InGameUIManager.Instance.SabotageButtonUI.SetActive(true);
             playerFinder.SetKillRange(GameSystem.Instance.killRange + 1f);
-        }
-        else
-        {
             var my_ventsystem = FindObjectOfType<VentSystem>();
-            my_ventsystem.VentOffAll();
+            my_ventsystem.VentOnAll();
         }
     }
 

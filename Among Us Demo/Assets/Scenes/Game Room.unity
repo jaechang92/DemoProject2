@@ -14885,6 +14885,7 @@ GameObject:
   - component: {fileID: 1360273317}
   - component: {fileID: 1360273318}
   - component: {fileID: 1360273319}
+  - component: {fileID: 1360273320}
   m_Layer: 0
   m_Name: sprite_laptop_highlight
   m_TagString: Untagged
@@ -14994,6 +14995,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 111980fa526e18f4c9d2db24021f667a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1360273320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1360273315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38b121c1ebd05924384614d7762caa86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   useButtonSprite: {fileID: 21300000, guid: 1aa46c5fcf627ad409d7cd1e922dcc1c, type: 3}

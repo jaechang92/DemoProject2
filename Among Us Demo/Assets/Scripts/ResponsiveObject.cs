@@ -5,7 +5,8 @@ using UnityEngine;
 public class ResponsiveObject : TaskData
 {
     // 해당 객체에 할당하고 각각 퀘스트와 연결
-
+    [SerializeField]
+    private Sprite useButtonSprite;
     [SerializeField]
     private GameObject activeObject;
 
@@ -14,7 +15,10 @@ public class ResponsiveObject : TaskData
         var character = collision.GetComponent<CharacterMover>();
         if (character != null && character.hasAuthority)
         {
-            InGameUIManager.Instance.SetUesButton(null, OnClickUse);
+            if (VentSystem.Instance.used == false)
+            {
+                InGameUIManager.Instance.SetUesButton(useButtonSprite, OnClickUse);
+            }
         }
     }
 
@@ -23,7 +27,10 @@ public class ResponsiveObject : TaskData
         var character = collision.GetComponent<CharacterMover>();
         if (character != null && character.hasAuthority)
         {
-            InGameUIManager.Instance.UnSetUesButton();
+            if (VentSystem.Instance.used == false)
+            {
+                InGameUIManager.Instance.UnSetUesButton();
+            }
         }
     }
 

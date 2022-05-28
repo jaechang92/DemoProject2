@@ -18,7 +18,8 @@ public enum VentCategory
 public class VentUI : MonoBehaviour
 {
     public VentCategory ventCategory;
-
+    [SerializeField]
+    private Sprite useButtonSprite;
     private AmongUsRoomManager manager;
     private void Start()
     {
@@ -27,17 +28,20 @@ public class VentUI : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        InGameUIManager.Instance.SetUesButton(SetVentUseButton);
+        InGameUIManager.Instance.SetUesButton(useButtonSprite, SetVentUseButton);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        InGameUIManager.Instance.UnSetUesButton();
+        if (VentSystem.Instance.used == false )
+        {
+            InGameUIManager.Instance.UnSetUesButton();
+        }
     }
 
     public void SetVentUseButton()
     {
-        
+        InGameUIManager.Instance.debugText.text += "VentActive";
         VentSystem.Instance.SetVent((int)ventCategory, gameObject);
     }
 

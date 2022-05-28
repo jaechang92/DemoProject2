@@ -22,8 +22,8 @@ public class VentSystem : MonoBehaviour
 
     [SerializeField]
     private List<Button> arrows;
-    [SerializeField]
-    private bool used = false;
+
+    public bool used = false;
 
     private void Awake()
     {
@@ -32,7 +32,7 @@ public class VentSystem : MonoBehaviour
             Instance = this;
         }
 
-
+        
     }
 
     private void VentColliderOff(List<Transform> list)
@@ -46,7 +46,29 @@ public class VentSystem : MonoBehaviour
             }
         }
     }
-    public void VentOffAll()
+
+    private void VentColliderOn(List<Transform> list)
+    {
+        foreach (var item in list)
+        {
+            var colliders = item.GetComponentsInChildren<Collider2D>();
+            for (int i = 0; i < colliders.Length; i++)
+            {
+                colliders[i].enabled = true;
+            }
+        }
+    }
+    public void VentOnAll()
+    {
+        VentColliderOn(ventCafeteriaAdminHallway);
+        VentColliderOn(ventMedbayElectricalSecurity);
+        VentColliderOn(ventReactorUpperEngine);
+        VentColliderOn(ventReactorLowerEngine);
+        VentColliderOn(ventNavigationWeapons);
+        VentColliderOn(ventNavigationShields);
+    }
+
+    void Start()
     {
         VentColliderOff(ventCafeteriaAdminHallway);
         VentColliderOff(ventMedbayElectricalSecurity);
@@ -54,11 +76,6 @@ public class VentSystem : MonoBehaviour
         VentColliderOff(ventReactorLowerEngine);
         VentColliderOff(ventNavigationWeapons);
         VentColliderOff(ventNavigationShields);
-    }
-
-    void Start()
-    {
-
     }
 
     void Update()
@@ -76,22 +93,22 @@ public class VentSystem : MonoBehaviour
             switch (idx)
             {
                 case 0:
-                    FindAnsDirection(ventCafeteriaAdminHallway, obj);
+                    FindAndDirection(ventCafeteriaAdminHallway, obj);
                     break;
                 case 1:
-                    FindAnsDirection(ventMedbayElectricalSecurity, obj);
+                    FindAndDirection(ventMedbayElectricalSecurity, obj);
                     break;
                 case 2:
-                    FindAnsDirection(ventReactorUpperEngine, obj);
+                    FindAndDirection(ventReactorUpperEngine, obj);
                     break;
                 case 3:
-                    FindAnsDirection(ventReactorLowerEngine, obj);
+                    FindAndDirection(ventReactorLowerEngine, obj);
                     break;
                 case 4:
-                    FindAnsDirection(ventNavigationWeapons, obj);
+                    FindAndDirection(ventNavigationWeapons, obj);
                     break;
                 case 5:
-                    FindAnsDirection(ventNavigationShields, obj);
+                    FindAndDirection(ventNavigationShields, obj);
                     break;
                 default:
                     break;
@@ -128,7 +145,7 @@ public class VentSystem : MonoBehaviour
     }
 
 
-    private void FindAnsDirection(List<Transform> m_list,GameObject obj)
+    private void FindAndDirection(List<Transform> m_list,GameObject obj)
     {
         for (int i = 0; i < m_list.Count; i++)
         {
@@ -145,7 +162,7 @@ public class VentSystem : MonoBehaviour
                         { 
                             MoveToTarget(m_list[temp].transform.position);
                             SetActiveFalseArrows();
-                            FindAnsDirection(m_list, m_list[temp].gameObject);
+                            FindAndDirection(m_list, m_list[temp].gameObject);
                         });
                         //arrows[j].onClick.AddListener(() =>
                         //{

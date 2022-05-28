@@ -79,6 +79,7 @@ public class CharacterMover : NetworkBehaviour
         {
             manager.gameRuleData = FindObjectOfType<GameRuleStore>().GetGameRuleData();
         }
+        moveSpeed = manager.gameRuleData.moveSpeed;
     }
 
     public virtual void Start()

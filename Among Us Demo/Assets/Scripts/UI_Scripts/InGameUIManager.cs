@@ -97,12 +97,10 @@ public class InGameUIManager : MonoBehaviour
     public void SetUesButton(Sprite sprite)
     {
         originUseButtonSprite = useButtonUI.useButton.image.sprite;
+
         if (sprite != null)
         {
-            InGameUIManager.Instance.debugText.text = "";
-            InGameUIManager.Instance.debugText.text += InGameUIManager.Instance.MyDebuger(useButtonUI.useButton.image.sprite.name);
             useButtonUI.useButton.image.sprite = sprite;
-            InGameUIManager.Instance.debugText.text += InGameUIManager.Instance.MyDebuger(useButtonUI.useButton.image.sprite.name);
         }
         useButtonUI.useButton.interactable = true;
     }
