@@ -32,7 +32,8 @@ public class GameSystem : NetworkBehaviour
 
     [SyncVar]
     public int sabotageCheckCount = 0;
-
+    [SyncVar]
+    public string o2MissionNumber;
 
 
     [SerializeField]
@@ -225,6 +226,7 @@ public class GameSystem : NetworkBehaviour
                 // 경고음 + 산소 사보타지
                 // 타이머 온
                 Debug.Log("산소 사보타지");
+                o2MissionNumber = Random.Range(100000, 1000000).ToString();
                 InitSabo();
                  StartCoroutine(SabotageRedBG_Coroutine());
                 break;

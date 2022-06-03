@@ -28,14 +28,22 @@ public class VentUI : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        InGameUIManager.Instance.SetUesButton(useButtonSprite, SetVentUseButton);
+        var character = collision.GetComponent<CharacterMover>();
+        if (character != null && character.hasAuthority)
+        {
+            InGameUIManager.Instance.SetUesButton(useButtonSprite, SetVentUseButton);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (VentSystem.Instance.used == false )
+        var character = collision.GetComponent<CharacterMover>();
+        if (character != null && character.hasAuthority)
         {
-            InGameUIManager.Instance.UnSetUesButton();
+            if (VentSystem.Instance.used == false)
+            {
+                InGameUIManager.Instance.UnSetUesButton();
+            }
         }
     }
 

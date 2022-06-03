@@ -6,7 +6,13 @@ using UnityEngine.UI;
 public class SabotageO2Mission : MonoBehaviour
 {
     [SerializeField]
-    private string missionNumber;
+    public string MissionNumber 
+    {
+        get
+        {
+            return GameSystem.Instance.o2MissionNumber;
+        }
+    }
 
     [SerializeField]
     private string strNum = null;
@@ -19,7 +25,7 @@ public class SabotageO2Mission : MonoBehaviour
 
     private void Start()
     {
-        SetMissionNumber();
+        //SetMissionNumber();
     }
 
     private void OnEnable()
@@ -32,12 +38,12 @@ public class SabotageO2Mission : MonoBehaviour
         isClear = false;
         strNum = "";
         numberScreenText.text = strNum;
+        SetMissionNumber();
     }
 
     public void SetMissionNumber()
     {
-        missionNumber = Random.Range(100000, 1000000).ToString();
-        keypadNoteText.text = "today's code:\n" + missionNumber;
+        keypadNoteText.text = "today's code:\n" + MissionNumber;
     }
 
     public void ClickNumber(string num)
@@ -52,7 +58,7 @@ public class SabotageO2Mission : MonoBehaviour
     {
         if (isClear) return;
         
-        if (strNum == missionNumber)
+        if (strNum == MissionNumber)
         {
             isClear = true;
             GameSystem.Instance.sabotageCheckCount++;

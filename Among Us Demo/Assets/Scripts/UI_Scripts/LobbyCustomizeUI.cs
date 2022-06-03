@@ -10,12 +10,20 @@ public class LobbyCustomizeUI : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        LobbyUIManager.Instance.SetUesButton(useButtonSprite, OnClickUseButton_InLobby);
+        var character = collision.GetComponent<CharacterMover>();
+        if (character != null && character.hasAuthority)
+        {
+            LobbyUIManager.Instance.SetUesButton(useButtonSprite, OnClickUseButton_InLobby);
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        LobbyUIManager.Instance.UnSetUesButton();
+        var character = collision.GetComponent<CharacterMover>();
+        if (character != null && character.hasAuthority)
+        {
+            LobbyUIManager.Instance.UnSetUesButton();
+        }
     }
 
     public void OnClickUseButton_InLobby()
