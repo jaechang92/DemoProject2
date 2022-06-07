@@ -161,13 +161,22 @@ public class InGameUIManager : MonoBehaviour
         var character = AmongUsRoomPlayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
         SabotageUI saboUI = EventSystem.current.currentSelectedGameObject.GetComponent<SabotageUI>();
         E_Sabotage sabo = saboUI.sabotage;
-        for (int i = 0; i < saboUI.sabotageObjects.Count; i++)
+        int saboIndex = 0;
+        foreach (var item in GameSystem.Instance.sabotages)
         {
-            TaskManager.instance.TaskObjectCollidersOn(saboUI.sabotageObjects[i]);
+            if (saboUI == item)
+            {
+                GameSystem.Instance.saboIndex = saboIndex;
+                break;
+            }
+            saboIndex++;
         }
 
+        //for (int i = 0; i < saboUI.sabotageObjects.Count; i++)
+        //{
+        //    TaskManager.instance.TaskObjectCollidersOn(saboUI.sabotageObjects[i]);
+        //}
         character.Sabotage(sabo);
-
 
     }
 

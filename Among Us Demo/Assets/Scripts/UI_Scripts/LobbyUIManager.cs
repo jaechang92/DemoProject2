@@ -81,6 +81,7 @@ public class LobbyUIManager : MonoBehaviour
         }
 
         manager.nowScene = manager.GameplayScene;
+        manager.speed = manager.gameRuleData.moveSpeed;
         manager.ServerChangeScene(manager.GameplayScene);
 
     }

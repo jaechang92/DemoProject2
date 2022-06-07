@@ -10,11 +10,18 @@ public class GameSystem : NetworkBehaviour
 
     private List<InGameCharacterMover> players = new List<InGameCharacterMover>();
 
+    public List<SabotageUI> sabotages;
+
     [SerializeField]
     private Transform spawnTransform;
 
     [SerializeField]
     private float spawnDistance;
+    [SyncVar]
+    public int saboIndex;
+
+    [SyncVar]
+    public float moveSpeed;
 
     [SyncVar]
     public float killCooldown;
@@ -50,7 +57,6 @@ public class GameSystem : NetworkBehaviour
         {
             players.Add(player);
         }
-
     }
 
 
@@ -78,7 +84,7 @@ public class GameSystem : NetworkBehaviour
         var manager = NetworkManager.singleton as AmongUsRoomManager;
         killCooldown = manager.gameRuleData.killCooldown;
         killRange = (int)manager.gameRuleData.killRange;
-
+        moveSpeed = manager.gameRuleData.moveSpeed;
         while (manager.roomSlots.Count != players.Count)
         {
             yield return null;
@@ -143,6 +149,7 @@ public class GameSystem : NetworkBehaviour
         foreach (var player in players)
         {
             player.SetNicknameColor(myCharacter.playerType);
+            player.SetMoveSpeed(moveSpeed);
         }
 
 
@@ -213,6 +220,13 @@ public class GameSystem : NetworkBehaviour
 
     private IEnumerator StartSabotage_Coroutine(E_Sabotage sabotage)
     {
+
+        for (int i = 0; i < sabotages[saboIndex].sabotageObjects.Count; i++)
+        {
+            TaskManager.instance.TaskObjectCollidersOn(sabotages[saboIndex].sabotageObjects[i]);
+        }
+        sabotages[saboIndex].SetTimerImage();
+        sabotages[saboIndex].SetInteractable(false);
         switch (sabotage)
         {
             case E_Sabotage.sabotage_reactor:
@@ -409,6 +423,7 @@ public class GameSystem : NetworkBehaviour
     [ClientRpc]
     public void RpcSendSabotage(E_Sabotage sabotage)
     {
+        
         StartCoroutine(StartSabotage_Coroutine(sabotage));
     }
 
@@ -431,6 +446,7 @@ public class GameSystem : NetworkBehaviour
         if (count >= 2)
         {
             StopAllCoroutines();
+            sabotages[saboIndex].SetInteractable(true);
             InGameUIManager.Instance.SabotageRedBG.gameObject.SetActive(false);
             sabotageCheckCount = 0;
         }

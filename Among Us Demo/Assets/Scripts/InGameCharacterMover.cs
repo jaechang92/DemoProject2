@@ -70,6 +70,10 @@ public class InGameCharacterMover : CharacterMover
             nicknameText.color = Color.red;
         }
     }
+    public void SetMoveSpeed(float speed)
+    {
+        moveSpeed = speed;
+    }
 
     public void SetKillCooldown()
     {

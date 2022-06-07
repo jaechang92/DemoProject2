@@ -370,7 +370,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  moveSpeed: 2
+  isMoveable: 0
+  moveSpeed: 1
+  characterSize: 0.7
+  camSize: 2.5
   playerColor: 0
   nickname: 
   nicknameText: {fileID: 4646407180944365977}

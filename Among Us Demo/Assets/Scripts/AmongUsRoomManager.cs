@@ -8,6 +8,7 @@ public class AmongUsRoomManager : NetworkRoomManager
     public GameRuleData gameRuleData;
     public string nowScene;
     public int minPlayerCount;
+    public float speed;
     public int imposterCount;
 
 
@@ -16,9 +17,7 @@ public class AmongUsRoomManager : NetworkRoomManager
     public override void OnRoomServerConnect(NetworkConnection conn)
     {
         base.OnRoomServerConnect(conn);
-
         
-
     }
 
 }

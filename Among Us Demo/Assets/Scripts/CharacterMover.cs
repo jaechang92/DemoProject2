@@ -74,12 +74,18 @@ public class CharacterMover : NetworkBehaviour
         spriteRenderer.material = inst;
         spriteRenderer.material.SetColor("_PlayerColor", PlayerColor.GetColor(playerColor));
         var manager = NetworkManager.singleton as AmongUsRoomManager;
-        
         if (NetworkManager.networkSceneName != manager.GameplayScene)
         {
             manager.gameRuleData = FindObjectOfType<GameRuleStore>().GetGameRuleData();
+            moveSpeed = manager.gameRuleData.moveSpeed;
         }
-        moveSpeed = manager.gameRuleData.moveSpeed;
+        
+        //if (InGameUIManager.Instance != null)
+        //{
+        //    InGameUIManager.Instance.debugText.text += manager.gameRuleData.moveSpeed;
+        //}
+
+
     }
 
     public virtual void Start()

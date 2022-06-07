@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 public enum E_Sabotage
 {
     sabotage_reactor,
@@ -12,5 +13,35 @@ public enum E_Sabotage
 public class SabotageUI : MonoBehaviour
 {
     public E_Sabotage sabotage;
-    public List<Transform> sabotageObjects; 
+    [SerializeField]
+    public List<Transform> sabotageObjects;
+    [SerializeField]
+    private float timer = 1;
+    [SerializeField]
+    private Image fillAmountImage;
+
+    private Button btn;
+    private void Start()
+    {
+        btn = GetComponent<Button>();
+        
+    }
+
+    public void SetTimerImage()
+    {
+        fillAmountImage.fillAmount = 1;
+        StartCoroutine(Co_Timer());
+    }
+    public void SetInteractable(bool state)
+    {
+        btn.interactable = state;
+    }
+    IEnumerator Co_Timer()
+    {
+        while (fillAmountImage.fillAmount > 0)
+        {
+            fillAmountImage.fillAmount -= Time.deltaTime / timer;
+            yield return null;
+        }
+    }
 }
