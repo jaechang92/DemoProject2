@@ -40,7 +40,7 @@ public class GameSystem : NetworkBehaviour
     [SyncVar]
     public int sabotageCheckCount = 0;
     [SyncVar]
-    public string o2MissionNumber;
+    public string o2MissionNumber = "";
 
 
     [SerializeField]
@@ -215,7 +215,7 @@ public class GameSystem : NetworkBehaviour
     private void InitSabo()
     {
         InGameUIManager.Instance.SabotageRedBG.gameObject.SetActive(true);
-        sabotageCheckCount = 0;
+        CmdSabotageCheckCount(0);
     }
 
     private IEnumerator StartSabotage_Coroutine(E_Sabotage sabotage)
@@ -225,8 +225,13 @@ public class GameSystem : NetworkBehaviour
         {
             TaskManager.instance.TaskObjectCollidersOn(sabotages[saboIndex].sabotageObjects[i]);
         }
-        sabotages[saboIndex].SetTimerImage();
-        sabotages[saboIndex].SetInteractable(false);
+
+        if (sabotages[saboIndex].gameObject.activeSelf == true)
+        {
+            sabotages[saboIndex].SetTimerImage();
+            sabotages[saboIndex].SetInteractable(false);
+        }
+        
         switch (sabotage)
         {
             case E_Sabotage.sabotage_reactor:
@@ -448,7 +453,13 @@ public class GameSystem : NetworkBehaviour
             StopAllCoroutines();
             sabotages[saboIndex].SetInteractable(true);
             InGameUIManager.Instance.SabotageRedBG.gameObject.SetActive(false);
-            sabotageCheckCount = 0;
+            CmdSabotageCheckCount(0);
         }
+    }
+
+    [Command]
+    public void CmdSabotageCheckCount(int count)
+    {
+        sabotageCheckCount = count;
     }
 }

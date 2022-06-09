@@ -124,7 +124,6 @@ public class VentSystem : MonoBehaviour
         used = !used;
     }
 
-
     private void ActionVent(bool isUse)
     {
         // 임포스터 캐릭터 밴트 액션

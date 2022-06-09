@@ -61,7 +61,7 @@ public class SabotageO2Mission : MonoBehaviour
         if (strNum == MissionNumber)
         {
             isClear = true;
-            GameSystem.Instance.sabotageCheckCount++;
+            GameSystem.Instance.CmdSabotageCheckCount(++GameSystem.Instance.sabotageCheckCount);
             StartCoroutine(InGameUIManager.Instance.CloseUI(gameObject, 1.0f));
             var myCharacter = AmongUsRoomPlayer.MyRoomPlayer.myCharacter as InGameCharacterMover;
             myCharacter.CmdSabotageCheckFunc(GameSystem.Instance.sabotageCheckCount);

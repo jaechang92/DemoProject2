@@ -19,13 +19,10 @@ public class SabotageUI : MonoBehaviour
     private float timer = 1;
     [SerializeField]
     private Image fillAmountImage;
-
+    [SerializeField]
     private Button btn;
-    private void Start()
-    {
-        btn = GetComponent<Button>();
-        
-    }
+
+
 
     public void SetTimerImage()
     {
